@@ -1,11 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import OxalysLogo from "@/components/ui/OxalysLogo";
-
-const LEGAL_LINKS = [
-  { label: "Mentions légales", href: "/mentions-legales" },
-  { label: "CGU", href: "/cgu" },
-  { label: "Confidentialité", href: "/confidentialite" },
-];
+import { useTheme } from "@/lib/context/ThemeContext";
 
 const PRODUCT_LINKS = [
   { label: "Accueil", href: "/" },
@@ -19,77 +16,83 @@ const COMPANY_LINKS = [
   { label: "Presse", href: "/presse" },
 ];
 
+const LEGAL_LINKS = [
+  { label: "Mentions légales", href: "/mentions-legales" },
+  { label: "CGU", href: "/cgu" },
+  { label: "Confidentialité", href: "/confidentialite" },
+];
+
 export default function Footer() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  const footerBg    = isDark ? "rgba(6,10,20,0.97)"      : "rgba(248,250,255,0.97)";
+  const borderColor = isDark ? "rgba(255,255,255,0.06)"   : "rgba(0,0,0,0.07)";
+  const labelColor  = isDark ? "rgba(255,255,255,0.22)"   : "#94a3b8";
+  const linkColor   = isDark ? "rgba(255,255,255,0.45)"   : "#64748b";
+  const dotColor    = isDark ? "rgba(59,130,246,0.06)"    : "rgba(59,130,246,0.05)";
+  const copyColor   = isDark ? "rgba(255,255,255,0.22)"   : "#94a3b8";
+  const descColor   = isDark ? "rgba(255,255,255,0.4)"    : "#94a3b8";
+
   return (
-    <footer className="border-t border-[var(--border)] bg-[var(--bg)]">
-      <div className="max-w-6xl mx-auto px-5 py-14">
+    <footer className="relative" style={{ background: footerBg, borderTop: `1px solid ${borderColor}` }}>
+      {/* Subtle dot grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(circle, ${dotColor} 1px, transparent 1px)`,
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      <div className="relative z-10 max-w-6xl mx-auto px-5 py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+
           {/* Brand */}
           <div className="sm:col-span-2 md:col-span-1">
-            <div className="flex items-center gap-2 mb-3">
-              <OxalysLogo size={26} />
-              <span className="font-display font-bold text-base text-[var(--text)]">Oxalys</span>
+            <div className="mb-4">
+              <OxalysLogo size={100} />
             </div>
-            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-[200px]">
-              La plateforme qui connecte makers et FabLabs partout en France.
+            <p className="text-sm leading-relaxed max-w-[210px]" style={{ color: descColor }}>
+              Surveillance qualité de l&apos;air des FabLabs universitaires en temps réel.
             </p>
           </div>
 
-          {/* Product */}
-          <div>
-            <p className="text-xs font-semibold text-[var(--text-subtle)] uppercase tracking-widest mb-4">
-              Produit
-            </p>
-            <ul className="flex flex-col gap-2.5">
-              {PRODUCT_LINKS.map(({ label, href }) => (
-                <li key={href}>
-                  <Link href={href} className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <p className="text-xs font-semibold text-[var(--text-subtle)] uppercase tracking-widest mb-4">
-              Entreprise
-            </p>
-            <ul className="flex flex-col gap-2.5">
-              {COMPANY_LINKS.map(({ label, href }) => (
-                <li key={href}>
-                  <Link href={href} className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <p className="text-xs font-semibold text-[var(--text-subtle)] uppercase tracking-widest mb-4">
-              Légal
-            </p>
-            <ul className="flex flex-col gap-2.5">
-              {LEGAL_LINKS.map(({ label, href }) => (
-                <li key={href}>
-                  <Link href={href} className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {[
+            { title: "Produit",    links: PRODUCT_LINKS },
+            { title: "Entreprise", links: COMPANY_LINKS },
+            { title: "Légal",      links: LEGAL_LINKS   },
+          ].map(({ title, links }) => (
+            <div key={title}>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: labelColor }}>
+                {title}
+              </p>
+              <ul className="flex flex-col gap-2.5">
+                {links.map(({ label, href }) => (
+                  <li key={href}>
+                    <Link
+                      href={href}
+                      className="text-sm transition-colors duration-200 hover:text-blue-400"
+                      style={{ color: linkColor }}
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-[var(--border)] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-[var(--text-subtle)]">
+        <div
+          className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3"
+          style={{ borderTop: `1px solid ${borderColor}` }}
+        >
+          <p className="text-xs" style={{ color: copyColor }}>
             © {new Date().getFullYear()} Oxalys SAS. Tous droits réservés.
           </p>
-          <p className="text-xs text-[var(--text-subtle)]">
+          <p className="text-xs" style={{ color: copyColor }}>
             Fabriqué en France 🇫🇷
           </p>
         </div>

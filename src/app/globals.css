@@ -27,13 +27,8 @@
     --border-strong: rgba(255, 255, 255, 0.12);
   }
 
-  * {
-    box-sizing: border-box;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
   body {
     background-color: var(--bg);
@@ -44,12 +39,8 @@
     transition: background-color 0.3s, color 0.3s;
   }
 
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
     background: rgba(59, 130, 246, 0.35);
     border-radius: 3px;
@@ -113,9 +104,7 @@
     transition: border-color 0.2s, box-shadow 0.2s;
   }
 
-  .input-brand::placeholder {
-    color: var(--text-subtle);
-  }
+  .input-brand::placeholder { color: var(--text-subtle); }
 
   .input-brand:focus {
     border-color: #3b82f6;
@@ -164,23 +153,258 @@
     color: #3b82f6;
     background: rgba(59, 130, 246, 0.06);
   }
+}
 
-  /* ── Animations ── */
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
+/* ── Station section animations ────────────────────────────────────────────── */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 0.7; }
+}
+
+@keyframes stationHubPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 0 rgba(59, 130, 246, 0),
+      0 0 20px rgba(59, 130, 246, 0.2);
   }
-
-  @keyframes pulseGlow {
-    0%, 100% { opacity: 0.35; }
-    50%       { opacity: 0.7; }
-  }
-
-  .animate-fade-in-up {
-    animation: fadeInUp 0.6s ease forwards;
-  }
-
-  .animate-pulse-glow {
-    animation: pulseGlow 4s ease-in-out infinite;
+  50% {
+    box-shadow:
+      0 0 0 16px rgba(59, 130, 246, 0.06),
+      0 0 40px rgba(59, 130, 246, 0.35);
   }
 }
+
+@keyframes radarSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes nodeFloatA {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px);   }
+  50%       { transform: translate(-50%, -50%) translateY(-7px);  }
+}
+@keyframes nodeFloatB {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px);   }
+  50%       { transform: translate(-50%, -50%) translateY(-5px);  }
+}
+@keyframes nodeFloatC {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px);   }
+  50%       { transform: translate(-50%, -50%) translateY(-8px);  }
+}
+@keyframes nodeFloatD {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px);   }
+  50%       { transform: translate(-50%, -50%) translateY(-6px);  }
+}
+@keyframes nodeFloatE {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px);   }
+  50%       { transform: translate(-50%, -50%) translateY(-5px);  }
+}
+
+@keyframes sensorHeartbeat {
+  0%, 100% { transform: translate(-50%, -50%) scale(1);    }
+  14%       { transform: translate(-50%, -50%) scale(1.08); }
+  28%       { transform: translate(-50%, -50%) scale(1);    }
+  42%       { transform: translate(-50%, -50%) scale(1.06); }
+  70%       { transform: translate(-50%, -50%) scale(1);    }
+}
+
+@keyframes scanLine {
+  0%   { top: 0%; opacity: 0.6; }
+  90%  { top: 100%; opacity: 0.6; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes ringExpand {
+  0%   { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes particleFloat {
+  0%   { transform: translateY(0px) translateX(0px); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(-80px) translateX(20px); opacity: 0; }
+}
+
+.animate-fade-in-up { animation: fadeInUp 0.6s ease forwards; }
+.animate-pulse-glow { animation: pulseGlow 4s ease-in-out infinite; }
+.animate-station-hub { animation: stationHubPulse 3s ease-in-out infinite; }
+.animate-radar { animation: radarSpin 8s linear infinite; }
+.animate-ring { animation: ringExpand 2.5s ease-out infinite; }
+.animate-scan { animation: scanLine 4s ease-in-out infinite; }
+
+.node-float-a { animation: nodeFloatA 4.5s ease-in-out infinite; }
+.node-float-b { animation: nodeFloatB 5.2s ease-in-out infinite 0.5s; }
+.node-float-c { animation: sensorHeartbeat 2.4s ease-in-out infinite 0.8s; }
+.node-float-d { animation: nodeFloatD 4.8s ease-in-out infinite 1.2s; }
+.node-float-e { animation: nodeFloatE 5.5s ease-in-out infinite 0.3s; }
+
+/* ── FabLab page animations ─────────────────────────────────────────────── */
+
+@keyframes cardReveal {
+  0%   { opacity: 0; transform: translateY(32px) scale(0.95); filter: blur(4px); }
+  100% { opacity: 1; transform: translateY(0)    scale(1);    filter: blur(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes borderGlow {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1;   }
+}
+
+@keyframes scanSweep {
+  0%   { top: -2px; opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1);   box-shadow: 0 0 0 0 currentColor; }
+  50%       { transform: scale(1.2); box-shadow: 0 0 0 6px transparent; }
+}
+
+@keyframes searchCursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes headerSlide {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes counterUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Profile page animations ── */
+@keyframes avatarRing {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@keyframes profileSlideUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fillBar {
+  from { width: 0%; }
+  to   { width: var(--fill-width); }
+}
+@keyframes avatarGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); }
+  50%       { box-shadow: 0 0 40px 8px rgba(59,130,246,0.35); }
+}
+
+.animate-avatar-ring { animation: avatarRing 2.4s ease-out infinite; }
+.animate-profile-slide { animation: profileSlideUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards; }
+.animate-avatar-glow  { animation: avatarGlow 3s ease-in-out infinite; }
+
+.animate-card-reveal { animation: cardReveal 0.55s cubic-bezier(0.16,1,0.3,1) forwards; }
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
+  background-size: 200% auto;
+  animation: shimmer 2s linear infinite;
+}
+.animate-scan-sweep { animation: scanSweep 2s ease-in-out infinite; }
+.animate-dot-pulse   { animation: dotPulse 2s ease-in-out infinite; }
+.animate-cursor      { animation: searchCursor 1s step-end infinite; }
+.animate-header      { animation: headerSlide 0.5s ease forwards; }
+.animate-counter     { animation: counterUp 0.4s ease forwards; }
+
+/* ── Nouvelles animations sections accueil ─────────────────── */
+
+@keyframes wordReveal {
+  from { opacity: 0; transform: translateY(48px) skewY(3deg); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0)   skewY(0);     filter: blur(0); }
+}
+@keyframes sensorFloat {
+  0%,100% { transform: translateY(0px)   rotate(0deg); }
+  33%      { transform: translateY(-14px) rotate(0.8deg); }
+  66%      { transform: translateY(-7px)  rotate(-0.5deg); }
+}
+@keyframes sensorFloatB {
+  0%,100% { transform: translateY(0px)  rotate(0deg); }
+  33%      { transform: translateY(-9px) rotate(-0.8deg); }
+  66%      { transform: translateY(-18px) rotate(0.4deg); }
+}
+@keyframes sensorFloatC {
+  0%,100% { transform: translateY(0px)   rotate(0deg); }
+  50%      { transform: translateY(-11px) rotate(0.6deg); }
+}
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marqueeLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marqueeRight {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+@keyframes statBarGrow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+@keyframes aboutRevealLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes aboutRevealRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes aboutRevealUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes lineGrow {
+  from { scaleX: 0; opacity: 0; }
+  to   { scaleX: 1; opacity: 1; }
+}
+@keyframes orbitA {
+  from { transform: rotate(0deg)   translateX(52px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(52px) rotate(-360deg); }
+}
+@keyframes orbitB {
+  from { transform: rotate(120deg)   translateX(52px) rotate(-120deg); }
+  to   { transform: rotate(480deg)   translateX(52px) rotate(-480deg); }
+}
+@keyframes orbitC {
+  from { transform: rotate(240deg)   translateX(52px) rotate(-240deg); }
+  to   { transform: rotate(600deg)   translateX(52px) rotate(-600deg); }
+}
+@keyframes hubPing {
+  0%   { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes progressRingFill {
+  from { stroke-dashoffset: 251; }
+  to   { stroke-dashoffset: var(--ring-offset); }
+}
+
+.animate-word-reveal   { animation: wordReveal 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
+.animate-sensor-a      { animation: sensorFloat  4s ease-in-out infinite; }
+.animate-sensor-b      { animation: sensorFloatB 5s ease-in-out infinite; }
+.animate-sensor-c      { animation: sensorFloatC 3.5s ease-in-out infinite; }
+.animate-ticker        { animation: tickerScroll 30s linear infinite; }
+.animate-marquee-left  { animation: marqueeLeft  22s linear infinite; }
+.animate-marquee-right { animation: marqueeRight 28s linear infinite; }
+.animate-orbit-a       { animation: orbitA 8s linear infinite; }
+.animate-orbit-b       { animation: orbitB 8s linear infinite; }
+.animate-orbit-c       { animation: orbitC 8s linear infinite; }
+.animate-hub-ping      { animation: hubPing 2s ease-out infinite; }
+.animate-ring-fill     { animation: progressRingFill 1.8s cubic-bezier(0.16,1,0.3,1) forwards; }

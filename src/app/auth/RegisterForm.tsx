@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
-import { FABLABS_MOCK } from "@/lib/data";
-import type { Gender } from "@/types";
+import { fetchFabLabs } from "@/lib/supabase/fablabs";
+import type { Gender, FabLab } from "@/types";
 
 const STEPS = ["Identité", "Contact", "FabLab", "Sécurité"];
 
@@ -21,7 +21,7 @@ interface FormData {
   lastName: string;
   email: string;
   phone: string;
-  fablabId: number | null;
+  fablabId: string | null;
   password: string;
   confirmPassword: string;
 }
@@ -31,6 +31,8 @@ export default function RegisterForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
+  const [fablabs, setFablabs] = useState<FabLab[]>([]);
+  const [loadingFablabs, setLoadingFablabs] = useState(true);
   const [form, setForm] = useState<FormData>({
     gender: "", firstName: "", lastName: "",
     email: "", phone: "", fablabId: null,
@@ -38,6 +40,20 @@ export default function RegisterForm() {
   });
   const router = useRouter();
   const supabase = createClient();
+
+  useEffect(() => {
+    async function loadFabLabs() {
+      try {
+        const data = await fetchFabLabs();
+        setFablabs(data);
+      } catch (err) {
+        console.error("Failed to load fablabs", err);
+      } finally {
+        setLoadingFablabs(false);
+      }
+    }
+    loadFabLabs();
+  }, []);
 
   const set = (key: keyof FormData, value: FormData[keyof FormData]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -156,23 +172,33 @@ export default function RegisterForm() {
             Choisissez votre FabLab de référence (optionnel — vous pourrez en ajouter d&apos;autres plus tard).
           </p>
           <div className="flex flex-col gap-2 max-h-56 overflow-y-auto pr-1">
-            {FABLABS_MOCK.map((f) => (
-              <button
-                key={f.id}
-                type="button"
-                onClick={() => set("fablabId", f.id)}
-                className={`text-left p-3.5 rounded-xl border transition-all ${
-                  form.fablabId === f.id
-                    ? "border-sky-400 bg-sky-400/10"
-                    : "border-[var(--border)] hover:border-sky-400/30"
-                }`}
-              >
-                <p className={`font-bold text-sm ${form.fablabId === f.id ? "text-sky-400" : "text-[var(--text)]"}`}>
-                  {f.name}
-                </p>
-                <p className="text-[var(--text-muted)] text-xs">{f.city} · {f.zip_code}</p>
-              </button>
-            ))}
+            {loadingFablabs ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-sky-400"></div>
+              </div>
+            ) : fablabs.length > 0 ? (
+              fablabs.map((f) => (
+                <button
+                  key={f.id}
+                  type="button"
+                  onClick={() => set("fablabId", f.id)}
+                  className={`text-left p-3.5 rounded-xl border transition-all ${
+                    form.fablabId === f.id
+                      ? "border-sky-400 bg-sky-400/10"
+                      : "border-[var(--border)] hover:border-sky-400/30"
+                  }`}
+                >
+                  <p className={`font-bold text-sm ${form.fablabId === f.id ? "text-sky-400" : "text-[var(--text)]"}`}>
+                    {f.name}
+                  </p>
+                  <p className="text-[var(--text-muted)] text-xs">{f.city} · {f.zip_code}</p>
+                </button>
+              ))
+            ) : (
+              <p className="text-center py-4 text-xs text-[var(--text-muted)]">
+                Aucun FabLab trouvé.
+              </p>
+            )}
           </div>
           <button
             type="button"
