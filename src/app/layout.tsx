@@ -5,7 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Oxalys – La plateforme des makers français",
+  title: "Oxalys",
   description:
     "Oxalys connecte les makers, étudiants et professionnels aux meilleurs espaces de fabrication numérique en France.",
   keywords: ["FabLab", "maker", "fabrication numérique", "impression 3D", "découpe laser"],
