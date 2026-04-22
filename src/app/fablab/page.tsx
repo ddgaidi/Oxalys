@@ -7,7 +7,7 @@ import type { FabLab } from "@/types";
 
 const labs: FabLab[] = [
   {
-    id: 1,
+    id: "1",
     name: "FabLab Strasbourg",
     slug: "fablab-strasbourg",
     description: "",
@@ -17,7 +17,7 @@ const labs: FabLab[] = [
     created_at: new Date().toISOString(),
   },
   {
-    id: 2,
+    id: "2",
     name: "FabLab Paris",
     slug: "fablab-paris",
     description: "",
@@ -27,7 +27,7 @@ const labs: FabLab[] = [
     created_at: new Date().toISOString(),
   },
   {
-    id: 3,
+    id: "3",
     name: "FabLab Lyon",
     slug: "fablab-lyon",
     description: "",
