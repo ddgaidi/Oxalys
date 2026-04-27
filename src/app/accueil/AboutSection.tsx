@@ -45,23 +45,19 @@ function StepCard({ step, visible }: { step: typeof STEPS[0]; visible: boolean }
   const { color } = step;
 
   const isLeft = step.dir === "left";
-  const slideAnim = isLeft
-    ? { animationName: "aboutRevealLeft", animationDuration: "0.75s", animationFillMode: "forwards", animationTimingFunction: "cubic-bezier(0.16,1,0.3,1)" }
-    : { animationName: "aboutRevealRight", animationDuration: "0.75s", animationFillMode: "forwards", animationTimingFunction: "cubic-bezier(0.16,1,0.3,1)" };
 
   return (
     <div
-      className="flex gap-6 items-start"
-      style={{
-        opacity: visible ? 1 : 0,
-        ...( visible ? slideAnim : {}),
-      }}
+      className={[
+        "about-step-card flex flex-col gap-3 min-w-0 sm:flex-row sm:gap-6 sm:items-start",
+        visible ? "about-step-visible" : "",
+        isLeft ? "about-step-anim-left" : "about-step-anim-right",
+      ].join(" ")}
     >
-      {/* Numéro watermark + icône */}
-      <div className="shrink-0 flex flex-col items-center gap-2">
-        {/* Icône */}
+      {/* Icône + connecteur (connecteur uniquement ≥ sm) */}
+      <div className="flex flex-row items-center gap-3 shrink-0 sm:flex-col sm:items-center sm:gap-2">
         <div
-          className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300"
+          className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300"
           style={{
             background: `${color}18`,
             border: `1px solid ${color}35`,
@@ -70,29 +66,28 @@ function StepCard({ step, visible }: { step: typeof STEPS[0]; visible: boolean }
         >
           <step.icon size={20} style={{ color }} />
         </div>
-        {/* Ligne verticale de connexion */}
-        <div className="w-px flex-1 min-h-[40px]"
-          style={{ background: `linear-gradient(to bottom, ${color}40, transparent)` }} />
+        <div
+          className="hidden sm:block w-px flex-1 min-h-[40px]"
+          style={{ background: `linear-gradient(to bottom, ${color}40, transparent)` }}
+        />
       </div>
 
-      {/* Contenu */}
       <div
-        className="flex-1 pb-10 rounded-3xl p-6 relative overflow-hidden transition-all duration-300 hover:scale-[1.01]"
+        className="flex-1 min-w-0 pb-6 rounded-2xl sm:rounded-3xl p-4 sm:p-6 sm:pb-10 relative overflow-hidden transition-all duration-300 sm:hover:scale-[1.01]"
         style={{
           background: isDark ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.75)",
           border: `1px solid ${isDark ? `${color}18` : `${color}20`}`,
           boxShadow: isDark ? `inset 0 0 40px ${color}05` : `0 2px 16px rgba(0,0,0,0.04)`,
         }}
       >
-        {/* Accent stripe gauche */}
-        <div className="absolute top-0 left-0 bottom-0 w-0.5 rounded-l-3xl"
-          style={{ background: `linear-gradient(to bottom, ${color}, transparent)` }} />
-
-        {/* Numéro watermark */}
         <div
-          className="absolute top-2 right-4 font-display font-black select-none pointer-events-none leading-none"
+          className="absolute top-0 left-0 bottom-0 w-0.5 rounded-l-2xl sm:rounded-l-3xl"
+          style={{ background: `linear-gradient(to bottom, ${color}, transparent)` }}
+        />
+
+        <div
+          className="absolute top-1 right-2 sm:top-2 sm:right-4 font-display font-black select-none pointer-events-none leading-none text-[clamp(2.75rem,18vw,4rem)]"
           style={{
-            fontSize: "4rem",
             color: isDark ? `${color}08` : `${color}10`,
           }}
         >
@@ -100,13 +95,13 @@ function StepCard({ step, visible }: { step: typeof STEPS[0]; visible: boolean }
         </div>
 
         <h3
-          className="font-display font-bold text-lg mb-3"
+          className="font-display font-bold text-base sm:text-lg mb-2 sm:mb-3 pr-14 sm:pr-20 break-words"
           style={{ color: isDark ? "#ffffff" : "#0f172a" }}
         >
           {step.title}
         </h3>
         <p
-          className="text-[0.9375rem] leading-relaxed"
+          className="text-[0.875rem] sm:text-[0.9375rem] leading-relaxed break-words"
           style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#64748b" }}
           dangerouslySetInnerHTML={{ __html: step.desc }}
         />
@@ -145,21 +140,21 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <section className="py-24 px-5">
+    <section className="py-16 sm:py-24 px-4 sm:px-5 overflow-x-hidden">
       <div className="max-w-6xl mx-auto">
 
         {/* Header split */}
-        <div ref={sectionRef} className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div ref={sectionRef} className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
           {/* Gauche : accroche */}
-          <div className="sticky top-28">
+          <div className="lg:sticky lg:top-28 min-w-0">
             <p className="text-xs font-bold uppercase tracking-[0.22em] mb-5"
               style={{ color: "#3b82f6" }}>
               Qui sommes-nous ?
             </p>
             <h2
-              className="font-display font-black leading-tight tracking-tight mb-6"
-              style={{ fontSize: "clamp(1.9rem,3.5vw,3rem)", color: isDark ? "#ffffff" : "#0f172a" }}
+              className="font-display font-black leading-tight tracking-tight mb-6 break-words"
+              style={{ fontSize: "clamp(1.65rem,5.5vw,3rem)", color: isDark ? "#ffffff" : "#0f172a" }}
             >
               Une équipe passionnée au service des{" "}
               <span style={{
@@ -169,7 +164,7 @@ export default function AboutSection() {
                 makers
               </span>
             </h2>
-            <p className="leading-relaxed text-[0.9375rem] mb-8"
+            <p className="leading-relaxed text-[0.875rem] sm:text-[0.9375rem] mb-6 sm:mb-8 break-words"
               style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#64748b" }}>
               Oxalys est né du constat que les FabLabs manquent d&apos;outils pour surveiller la qualité
               de l&apos;air. Imprimantes 3D, découpe laser, fraiseuses CNC — chaque machine peut libérer
@@ -177,7 +172,7 @@ export default function AboutSection() {
             </p>
 
             {/* Mini stats en ligne */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
               {[
                 { v: "2026", l: "Fondée à Evry-Courcouronnes", c: "#3b82f6" },
                 { v: "<1s",  l: "Latence données", c: "#10b981" },
@@ -186,24 +181,24 @@ export default function AboutSection() {
               ].map(({ v, l, c }) => (
                 <div
                   key={l}
-                  className="px-4 py-3 rounded-2xl"
+                  className="px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl min-w-0"
                   style={{
                     background: isDark ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.75)",
                     border: `1px solid ${isDark ? `${c}18` : `${c}20`}`,
                   }}
                 >
-                  <p className="font-display font-bold text-lg" style={{
+                  <p className="font-display font-bold text-base sm:text-lg tabular-nums" style={{
                     background: `linear-gradient(135deg,${c} 0%,white 150%)`,
                     WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
                   }}>{v}</p>
-                  <p className="text-[11px]" style={{ color: isDark ? "rgba(255,255,255,0.35)" : "#94a3b8" }}>{l}</p>
+                  <p className="text-[10px] sm:text-[11px] leading-snug break-words hyphens-auto" lang="fr" style={{ color: isDark ? "rgba(255,255,255,0.35)" : "#94a3b8" }}>{l}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Droite : timeline */}
-          <div className="flex flex-col gap-0">
+          <div className="flex flex-col gap-0 min-w-0">
             {STEPS.map((step, i) => (
               <div key={step.num} ref={(el) => { cardRefs.current[i] = el; }}>
                 <StepCard step={step} visible={visible[i]} />

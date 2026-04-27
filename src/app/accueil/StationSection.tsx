@@ -6,15 +6,34 @@ import { useTheme } from "@/lib/context/ThemeContext";
 
 /* ── Data ─────────────────────────────────────────────────────────────────── */
 
-const r = 37; // pentagon radius as % of container
+const r = 35; // pentagon radius as % of container (slightly inset so all nodes stay in view)
 const CX = 50;
 const CY = 50;
+
+/** viewBox 0–100: start past hub glow (~72px ⌀), end just inside card face */
+const HUB_LINE_INSET = 8;
+const NODE_LINE_INSET = 2.5;
 
 function toPos(angleDeg: number) {
   const rad = (angleDeg * Math.PI) / 180;
   return {
     x: +(CX + r * Math.sin(rad)).toFixed(2),
     y: +(CY - r * Math.cos(rad)).toFixed(2),
+  };
+}
+
+function lineEndpoints(angleDeg: number) {
+  const pos = toPos(angleDeg);
+  const dx = pos.x - CX;
+  const dy = pos.y - CY;
+  const L = Math.sqrt(dx * dx + dy * dy) || 1;
+  const ux = dx / L;
+  const uy = dy / L;
+  return {
+    x1: +(CX + ux * HUB_LINE_INSET).toFixed(2),
+    y1: +(CY + uy * HUB_LINE_INSET).toFixed(2),
+    x2: +(pos.x - ux * NODE_LINE_INSET).toFixed(2),
+    y2: +(pos.y - uy * NODE_LINE_INSET).toFixed(2),
   };
 }
 
@@ -112,7 +131,7 @@ export default function StationSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 px-5 overflow-hidden"
+      className="relative py-24 px-5 overflow-x-hidden overflow-y-visible"
       style={{
         background: isDark
           ? "linear-gradient(180deg, #050810 0%, #060c18 100%)"
@@ -192,10 +211,14 @@ export default function StationSection() {
       <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
 
         {/* ── Pentagon diagram ── */}
-        <div className="lg:col-span-3 flex justify-center">
+        <div className="lg:col-span-3 flex justify-center items-center px-2 sm:px-4">
           <div
-            className="relative w-full"
-            style={{ maxWidth: 480, aspectRatio: "1 / 1" }}
+            className="relative w-full mx-auto"
+            style={{
+              maxWidth: 520,
+              aspectRatio: "1 / 1",
+              padding: "clamp(14px, 6.5vw, 40px)",
+            }}
           >
             {/* Outer decorative rings */}
             <div
@@ -233,16 +256,16 @@ export default function StationSection() {
               style={{ overflow: "visible" }}
             >
               {COMPS.map((comp, i) => {
-                const pos = toPos(comp.angle);
+                const { x1, y1, x2, y2 } = lineEndpoints(comp.angle);
                 const isActive = comp.id === activeId;
-                const lineLength = Math.sqrt((pos.x - CX) ** 2 + (pos.y - CY) ** 2);
+                const lineLength = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
                 return (
                   <g key={comp.id}>
-                    {/* Base line */}
                     <line
-                      x1={CX} y1={CY} x2={pos.x} y2={pos.y}
+                      x1={x1} y1={y1} x2={x2} y2={y2}
                       stroke={comp.color}
                       strokeWidth={isActive ? 0.6 : 0.3}
+                      strokeLinecap="round"
                       strokeDasharray={lineLength}
                       strokeDashoffset={triggered ? 0 : lineLength}
                       style={{
@@ -250,13 +273,12 @@ export default function StationSection() {
                         opacity: isActive ? 0.9 : 0.25,
                       }}
                     />
-                    {/* Animated data pulse dot */}
                     {triggered && isActive && (
                       <circle r="0.8" fill={comp.color}>
                         <animateMotion
                           dur="1.5s"
                           repeatCount="indefinite"
-                          path={`M ${CX} ${CY} L ${pos.x} ${pos.y}`}
+                          path={`M ${x1} ${y1} L ${x2} ${y2}`}
                         />
                       </circle>
                     )}
@@ -284,25 +306,25 @@ export default function StationSection() {
                   }}
                 />
               ))}
-                  <div
-                    className="relative flex flex-col items-center justify-center rounded-full border"
-                    style={{
-                      width: 72, height: 72,
-                      background: isDark
-                        ? "linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(5,150,105,0.15) 100%)"
-                        : "linear-gradient(135deg, rgba(37,99,235,0.18) 0%, rgba(5,150,105,0.12) 100%)",
-                      borderColor: "rgba(59,130,246,0.5)",
-                      boxShadow: "0 0 30px rgba(59,130,246,0.3), inset 0 0 20px rgba(59,130,246,0.1)",
-                    }}
-                  >
-                    <span
-                      className="font-display font-bold text-[9px] tracking-[0.15em] uppercase leading-none"
-                      style={{ color: isDark ? "#ffffff" : "#1e3a8a" }}
-                    >
-                      STATION
-                    </span>
-                    <span className="text-blue-500 text-[8px] font-medium mt-0.5">v2.4</span>
-                  </div>
+              <div
+                className="relative flex flex-col items-center justify-center rounded-full border"
+                style={{
+                  width: 72, height: 72,
+                  background: isDark
+                    ? "linear-gradient(135deg, rgba(37,99,235,0.25) 0%, rgba(5,150,105,0.15) 100%)"
+                    : "linear-gradient(135deg, rgba(37,99,235,0.18) 0%, rgba(5,150,105,0.12) 100%)",
+                  borderColor: "rgba(59,130,246,0.5)",
+                  boxShadow: "0 0 30px rgba(59,130,246,0.3), inset 0 0 20px rgba(59,130,246,0.1)",
+                }}
+              >
+                <span
+                  className="font-display font-bold text-[9px] tracking-[0.15em] uppercase leading-none"
+                  style={{ color: isDark ? "#ffffff" : "#1e3a8a" }}
+                >
+                  STATION
+                </span>
+                <span className="text-blue-500 text-[8px] font-medium mt-0.5">v2.4</span>
+              </div>
             </div>
 
             {/* Component nodes */}
@@ -311,22 +333,27 @@ export default function StationSection() {
               const isActive = comp.id === activeId;
               const Icon = comp.icon;
               return (
-                <button
+                <div
                   key={comp.id}
-                  onClick={() => setActiveId(comp.id)}
-                  className={`absolute ${FLOAT_CLASSES[i]} group`}
+                  className="absolute pointer-events-none"
                   style={{
                     left: `${pos.x}%`,
                     top: `${pos.y}%`,
+                    transform: "translate(-50%, -50%)",
                     opacity: triggered ? 1 : 0,
                     transition: `opacity 0.5s ease ${i * 0.15 + 0.4}s`,
                   }}
                 >
+                  <button
+                    type="button"
+                    onClick={() => setActiveId(comp.id)}
+                    className={`pointer-events-auto ${FLOAT_CLASSES[i]} group block border-0 bg-transparent p-0`}
+                  >
                   <div
                     className="relative rounded-xl border transition-all duration-300 cursor-pointer"
                     style={{
                       width: 88,
-                      padding: "10px 10px",
+                      padding: comp.tag ? "10px 10px 18px" : "10px 10px",
                       background: isActive
                         ? `linear-gradient(135deg, ${comp.dimColor}, ${isDark ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.8)"})`
                         : isDark ? "rgba(8, 12, 24, 0.85)" : "rgba(255,255,255,0.88)",
@@ -335,15 +362,14 @@ export default function StationSection() {
                         ? `0 0 20px ${comp.color}55, 0 0 40px ${comp.color}22`
                         : "none",
                       backdropFilter: "blur(12px)",
-                      transform: "translateX(-50%)",
-                      marginLeft: 0,
                     }}
                   >
                     {/* Glow dot */}
                     {comp.critical && (
                       <span
-                        className="absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full border-2 border-[#050810]"
-                        style={{ background: comp.color, boxShadow: `0 0 8px ${comp.color}` }}
+                        className="absolute top-2 right-2 z-10 w-2 h-2 rounded-full border border-[#050810]/80"
+                        style={{ background: comp.color, boxShadow: `0 0 6px ${comp.color}` }}
+                        aria-hidden
                       />
                     )}
                     <div
@@ -365,7 +391,7 @@ export default function StationSection() {
                     </p>
                     {comp.tag && (
                       <span
-                        className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 text-[8px] font-bold px-1.5 py-0.5 rounded-full whitespace-nowrap"
+                        className="absolute bottom-1.5 left-1/2 -translate-x-1/2 text-[8px] font-bold px-1.5 py-0.5 rounded-full whitespace-nowrap"
                         style={{
                           background: `${comp.color}30`,
                           color: comp.color,
@@ -376,7 +402,8 @@ export default function StationSection() {
                       </span>
                     )}
                   </div>
-                </button>
+                  </button>
+                </div>
               );
             })}
           </div>

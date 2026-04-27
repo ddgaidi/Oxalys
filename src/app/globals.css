@@ -185,33 +185,30 @@
   to   { transform: rotate(360deg); }
 }
 
+/* Station nodes: parent handles translate(-50%,-50%); animations only nudge/scale */
 @keyframes nodeFloatA {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0px);   }
-  50%       { transform: translate(-50%, -50%) translateY(-7px);  }
+  0%, 100% { transform: translateY(0px);   }
+  50%       { transform: translateY(-7px);  }
 }
 @keyframes nodeFloatB {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0px);   }
-  50%       { transform: translate(-50%, -50%) translateY(-5px);  }
-}
-@keyframes nodeFloatC {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0px);   }
-  50%       { transform: translate(-50%, -50%) translateY(-8px);  }
+  0%, 100% { transform: translateY(0px);   }
+  50%       { transform: translateY(-5px);  }
 }
 @keyframes nodeFloatD {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0px);   }
-  50%       { transform: translate(-50%, -50%) translateY(-6px);  }
+  0%, 100% { transform: translateY(0px);   }
+  50%       { transform: translateY(-6px);  }
 }
 @keyframes nodeFloatE {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0px);   }
-  50%       { transform: translate(-50%, -50%) translateY(-5px);  }
+  0%, 100% { transform: translateY(0px);   }
+  50%       { transform: translateY(-5px);  }
 }
 
 @keyframes sensorHeartbeat {
-  0%, 100% { transform: translate(-50%, -50%) scale(1);    }
-  14%       { transform: translate(-50%, -50%) scale(1.08); }
-  28%       { transform: translate(-50%, -50%) scale(1);    }
-  42%       { transform: translate(-50%, -50%) scale(1.06); }
-  70%       { transform: translate(-50%, -50%) scale(1);    }
+  0%, 100% { transform: scale(1);    }
+  14%       { transform: scale(1.08); }
+  28%       { transform: scale(1);    }
+  42%       { transform: scale(1.06); }
+  70%       { transform: scale(1);    }
 }
 
 @keyframes scanLine {
@@ -239,11 +236,11 @@
 .animate-ring { animation: ringExpand 2.5s ease-out infinite; }
 .animate-scan { animation: scanLine 4s ease-in-out infinite; }
 
-.node-float-a { animation: nodeFloatA 4.5s ease-in-out infinite; }
-.node-float-b { animation: nodeFloatB 5.2s ease-in-out infinite 0.5s; }
-.node-float-c { animation: sensorHeartbeat 2.4s ease-in-out infinite 0.8s; }
-.node-float-d { animation: nodeFloatD 4.8s ease-in-out infinite 1.2s; }
-.node-float-e { animation: nodeFloatE 5.5s ease-in-out infinite 0.3s; }
+.node-float-a { animation: nodeFloatA 4.5s ease-in-out infinite; transform-origin: center center; }
+.node-float-b { animation: nodeFloatB 5.2s ease-in-out infinite 0.5s; transform-origin: center center; }
+.node-float-c { animation: sensorHeartbeat 2.4s ease-in-out infinite 0.8s; transform-origin: center center; }
+.node-float-d { animation: nodeFloatD 4.8s ease-in-out infinite 1.2s; transform-origin: center center; }
+.node-float-e { animation: nodeFloatE 5.5s ease-in-out infinite 0.3s; transform-origin: center center; }
 
 /* ── FabLab page animations ─────────────────────────────────────────────── */
 
@@ -371,6 +368,29 @@
   from { opacity: 0; transform: translateY(40px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* AboutSection: vertical entrance on narrow screens (no translateX overflow) */
+.about-step-card {
+  opacity: 0;
+}
+.about-step-card.about-step-visible {
+  animation-duration: 0.75s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+.about-step-card.about-step-visible.about-step-anim-left,
+.about-step-card.about-step-visible.about-step-anim-right {
+  animation-name: aboutRevealUp;
+}
+@media (min-width: 640px) {
+  .about-step-card.about-step-visible.about-step-anim-left {
+    animation-name: aboutRevealLeft;
+  }
+  .about-step-card.about-step-visible.about-step-anim-right {
+    animation-name: aboutRevealRight;
+  }
+}
+
 @keyframes lineGrow {
   from { scaleX: 0; opacity: 0; }
   to   { scaleX: 1; opacity: 1; }
