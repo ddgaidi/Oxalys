@@ -4,13 +4,15 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
   Search, CheckCircle2, AlertTriangle, Ban,
-  Loader2, Sparkles
+  Sparkles
 } from "lucide-react";
 import FabLabGridCard from "./FabLabGridCard";
 import { useFavorites } from "@/lib/hooks/useFavorites";
 import { fetchFabLabs } from "@/lib/supabase/fablabs";
 import { useTheme } from "@/lib/context/ThemeContext";
 import type { FabLab } from "@/types";
+
+const AIR_QUALITY_POLLING_INTERVAL_MS = 1000;
 
 /* ── Safety filter config ── */
 const FILTERS = [
@@ -20,6 +22,19 @@ const FILTERS = [
   { id: "danger",  label: "Danger",    icon: Ban,           color: "#ef4444" },
 ] as const;
 type FilterId = typeof FILTERS[number]["id"];
+
+function hasFabLabAirQualityChanged(current: FabLab[], next: FabLab[]) {
+  if (current.length !== next.length) return true;
+
+  return next.some((nextFabLab) => {
+    const currentFabLab = current.find((fablab) => fablab.id === nextFabLab.id);
+    return (
+      !currentFabLab ||
+      currentFabLab.safety !== nextFabLab.safety ||
+      currentFabLab.air_quality_average !== nextFabLab.air_quality_average
+    );
+  });
+}
 
 /* ── Animated dot background ── */
 function DotGrid({ isDark }: { isDark: boolean }) {
@@ -64,7 +79,35 @@ export default function TonFabLabPage() {
   const isDark = theme === "dark";
 
   useEffect(() => {
-    fetchFabLabs().then(setFablabs).finally(() => setLoading(false));
+    let isMounted = true;
+    let isFetching = false;
+
+    async function refreshFabLabs(showLoader = false) {
+      if (isFetching) return;
+      isFetching = true;
+
+      try {
+        const freshFabLabs = await fetchFabLabs();
+        if (!isMounted) return;
+
+        setFablabs((currentFabLabs) =>
+          hasFabLabAirQualityChanged(currentFabLabs, freshFabLabs)
+            ? freshFabLabs
+            : currentFabLabs
+        );
+      } finally {
+        isFetching = false;
+        if (isMounted && showLoader) setLoading(false);
+      }
+    }
+
+    refreshFabLabs(true);
+    const intervalId = window.setInterval(refreshFabLabs, AIR_QUALITY_POLLING_INTERVAL_MS);
+
+    return () => {
+      isMounted = false;
+      window.clearInterval(intervalId);
+    };
   }, []);
 
   /* ── Keyboard shortcut: "/" to focus search ── */
@@ -323,7 +366,7 @@ export default function TonFabLabPage() {
       </div>
 
       <p className="relative z-10 text-center text-xs pb-8" style={{ color: footerText }}>
-        Connectez-vous pour synchroniser vos favoris · données mises à jour toutes les 10 secondes
+        Connectez-vous pour synchroniser vos favoris · données mises à jour chaque seconde
       </p>
     </div>
   );

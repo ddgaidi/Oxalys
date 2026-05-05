@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -8,8 +9,11 @@ import {
   Cpu, ExternalLink,
 } from "lucide-react";
 import { useTheme } from "@/lib/context/ThemeContext";
+import { fetchFabLabById } from "@/lib/supabase/fablabs";
 import FabLabFavoriteButton from "./FabLabFavoriteButton";
 import type { FabLab, SafetyLevel } from "@/types";
+
+const AIR_QUALITY_POLLING_INTERVAL_MS = 1000;
 
 /* ── Safety config ── */
 const SAFETY: Record<SafetyLevel, { color: string; bg: string; border: string; label: string; icon: typeof CheckCircle2 }> = {
@@ -18,9 +22,43 @@ const SAFETY: Record<SafetyLevel, { color: string; bg: string; border: string; l
   danger:  { color: "#ef4444", bg: "rgba(239,68,68,0.15)",  border: "rgba(239,68,68,0.35)",   label: "Danger",  icon: Ban },
 };
 
-export default function FabLabDetailContent({ fablab }: { fablab: FabLab }) {
+export default function FabLabDetailContent({ fablab: initialFabLab }: { fablab: FabLab }) {
+  const [fablab, setFablab] = useState(initialFabLab);
   const { theme } = useTheme();
   const isDark = theme === "dark";
+
+  useEffect(() => {
+    let isMounted = true;
+    let isFetching = false;
+
+    async function refreshFabLab() {
+      if (isFetching) return;
+      isFetching = true;
+
+      try {
+        const freshFabLab = await fetchFabLabById(initialFabLab.id);
+        if (!isMounted || !freshFabLab) return;
+
+        setFablab((currentFabLab) =>
+          currentFabLab.safety !== freshFabLab.safety ||
+          currentFabLab.air_quality_average !== freshFabLab.air_quality_average
+            ? freshFabLab
+            : currentFabLab
+        );
+      } finally {
+        isFetching = false;
+      }
+    }
+
+    refreshFabLab();
+    const intervalId = window.setInterval(refreshFabLab, AIR_QUALITY_POLLING_INTERVAL_MS);
+
+    return () => {
+      isMounted = false;
+      window.clearInterval(intervalId);
+    };
+  }, [initialFabLab.id]);
+
   const safety = SAFETY[fablab.safety];
   const SafetyIcon = safety.icon;
   const airQualityAverageLabel = typeof fablab.air_quality_average === "number"
@@ -256,7 +294,7 @@ export default function FabLabDetailContent({ fablab }: { fablab: FabLab }) {
                   ? "Aucun risque. L'accès est autorisé."
                   : fablab.safety === "caution"
                   ? "Accès autorisé, mais avec attention."
-                  : "Danger : l'air est trop pollué. L'accès est interdit."}
+                        : "Danger : l'air est trop pollué. L'accès est interdit."}
               </p>
             </div>
 

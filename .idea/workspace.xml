@@ -6,14 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b175b340-5ccc-4dc9-9c84-a3cfbed42c66" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/FabLabGridCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/FabLabGridCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sensor-simulator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sensor-simulator.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabDetailContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabDetailContent.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/supabase/fablabs.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/supabase/fablabs.server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/supabase/fablabs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/supabase/fablabs.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +132,7 @@
       <workItem from="1777398645145" duration="464000" />
       <workItem from="1777413789353" duration="15000" />
       <workItem from="1777927772715" duration="9000" />
-      <workItem from="1778000162103" duration="1668000" />
+      <workItem from="1778000162103" duration="2393000" />
     </task>
     <servers />
   </component>
