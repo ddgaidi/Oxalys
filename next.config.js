@@ -5,9 +5,6 @@ const nextConfig = {
       { protocol: "https", hostname: "**.supabase.co" },
     ],
   },
-  experimental: {
-    esmExternals: false,
-  },
 };
 
 module.exports = nextConfig;

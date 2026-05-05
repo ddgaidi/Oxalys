@@ -36,9 +36,9 @@ function cardGradient(name: string, isDark: boolean) {
 
 /* ── Safety config ── */
 const SAFETY = {
-  safe:    { color: "#10b981", label: "Safe",      Icon: CheckCircle2 },
-  caution: { color: "#f59e0b", label: "Attention", Icon: AlertTriangle },
-  danger:  { color: "#ef4444", label: "Interdit",  Icon: Ban },
+  safe:    { color: "#10b981", label: "Optimal", Icon: CheckCircle2 },
+  caution: { color: "#f59e0b", label: "Alerte",  Icon: AlertTriangle },
+  danger:  { color: "#ef4444", label: "Danger",  Icon: Ban },
 };
 
 interface Props {

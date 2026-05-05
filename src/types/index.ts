@@ -26,6 +26,12 @@ export interface FabLabDB {
   created_at: string;
 }
 
+/** Raw row from the `station` table in Supabase */
+export interface StationDB {
+  fablab_id: string | null;
+  air_qualite: number | string | null;
+}
+
 /** Normalised FabLab used throughout the UI */
 export interface FabLab {
   id: string;
@@ -38,6 +44,7 @@ export interface FabLab {
   logo_url?: string;
   cover_url?: string;
   safety: SafetyLevel;
+  air_quality_average?: number;
   equipment?: string[];
   website?: string;
   email?: string;

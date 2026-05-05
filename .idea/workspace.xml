@@ -4,14 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b175b340-5ccc-4dc9-9c84-a3cfbed42c66" name="Changes" comment="" />
+    <list default="true" id="b175b340-5ccc-4dc9-9c84-a3cfbed42c66" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/FabLabGridCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/FabLabGridCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabDetailContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabDetailContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/supabase/fablabs.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/supabase/fablabs.server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/supabase/fablabs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/supabase/fablabs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/index.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="53" />
+    <option name="cachedIndexableFilesCount" value="57" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -51,6 +61,7 @@
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
@@ -95,7 +106,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.31033.133" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.23567.141" />
       </set>
     </attachedChunks>
   </component>
@@ -122,6 +133,11 @@
       <workItem from="1776855642286" duration="7751000" />
       <workItem from="1776864826655" duration="1027000" />
       <workItem from="1776875315737" duration="474000" />
+      <workItem from="1777319152637" duration="577000" />
+      <workItem from="1777398645145" duration="464000" />
+      <workItem from="1777413789353" duration="15000" />
+      <workItem from="1777927772715" duration="9000" />
+      <workItem from="1778000162103" duration="1668000" />
     </task>
     <servers />
   </component>

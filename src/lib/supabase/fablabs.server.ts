@@ -1,5 +1,6 @@
 import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { dbToFabLab } from "@/lib/supabase/fablabs";
+import { dbToFabLab, fetchAirQualityAverages } from "@/lib/supabase/fablabs";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import type { FabLab, FabLabDB } from "@/types";
 
 /** Fetch all fablabs — server-side (RSC only) */
@@ -14,7 +15,14 @@ export async function fetchFabLabsServer(): Promise<FabLab[]> {
     console.error("[fetchFabLabsServer]", error.message);
     return [];
   }
-  return (data as FabLabDB[]).map(dbToFabLab);
+
+  const fablabs = (data ?? []) as FabLabDB[];
+  const airQualityAverages = await fetchAirQualityAverages(
+    supabase as SupabaseClient,
+    fablabs.map((fablab) => fablab.id)
+  );
+
+  return fablabs.map((fablab) => dbToFabLab(fablab, airQualityAverages.get(fablab.id)));
 }
 
 /** Fetch 6 random fablabs - server-side (RSC only) */
@@ -37,7 +45,13 @@ export async function fetchRandomFabLabsServer(limit: number = 6): Promise<FabLa
   }
 
   const shuffled = [...(data as FabLabDB[])].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, limit).map(dbToFabLab);
+  const selected = shuffled.slice(0, limit);
+  const airQualityAverages = await fetchAirQualityAverages(
+    supabase as SupabaseClient,
+    selected.map((fablab) => fablab.id)
+  );
+
+  return selected.map((fablab) => dbToFabLab(fablab, airQualityAverages.get(fablab.id)));
 }
 
 /** Fetch a single fablab by UUID — server-side (RSC only) */
@@ -50,5 +64,8 @@ export async function fetchFabLabByIdServer(id: string): Promise<FabLab | null> 
     .single();
 
   if (error || !data) return null;
-  return dbToFabLab(data as FabLabDB);
+
+  const fablab = data as FabLabDB;
+  const airQualityAverages = await fetchAirQualityAverages(supabase as SupabaseClient, [fablab.id]);
+  return dbToFabLab(fablab, airQualityAverages.get(fablab.id));
 }

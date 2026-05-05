@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/lib/context/ThemeContext";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Oxalys",

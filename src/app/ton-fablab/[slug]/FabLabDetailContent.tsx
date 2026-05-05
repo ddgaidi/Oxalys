@@ -13,9 +13,9 @@ import type { FabLab, SafetyLevel } from "@/types";
 
 /* ── Safety config ── */
 const SAFETY: Record<SafetyLevel, { color: string; bg: string; border: string; label: string; icon: typeof CheckCircle2 }> = {
-  safe:    { color: "#10b981", bg: "rgba(16,185,129,0.15)",  border: "rgba(16,185,129,0.35)",  label: "Accessible · 100% Safe",      icon: CheckCircle2 },
-  caution: { color: "#f59e0b", bg: "rgba(245,158,11,0.15)", border: "rgba(245,158,11,0.35)",  label: "Accessible · Faire attention", icon: AlertTriangle },
-  danger:  { color: "#ef4444", bg: "rgba(239,68,68,0.15)",  border: "rgba(239,68,68,0.35)",   label: "Interdit d'accès",             icon: Ban },
+  safe:    { color: "#10b981", bg: "rgba(16,185,129,0.15)",  border: "rgba(16,185,129,0.35)",  label: "Optimal", icon: CheckCircle2 },
+  caution: { color: "#f59e0b", bg: "rgba(245,158,11,0.15)", border: "rgba(245,158,11,0.35)",  label: "Alerte",  icon: AlertTriangle },
+  danger:  { color: "#ef4444", bg: "rgba(239,68,68,0.15)",  border: "rgba(239,68,68,0.35)",   label: "Danger",  icon: Ban },
 };
 
 export default function FabLabDetailContent({ fablab }: { fablab: FabLab }) {
@@ -23,6 +23,9 @@ export default function FabLabDetailContent({ fablab }: { fablab: FabLab }) {
   const isDark = theme === "dark";
   const safety = SAFETY[fablab.safety];
   const SafetyIcon = safety.icon;
+  const airQualityAverageLabel = typeof fablab.air_quality_average === "number"
+    ? fablab.air_quality_average.toLocaleString("fr-FR", { maximumFractionDigits: 1 })
+    : null;
 
   /* ── Theme-aware tokens ── */
   const pageBg  = isDark
@@ -250,10 +253,10 @@ export default function FabLabDetailContent({ fablab }: { fablab: FabLab }) {
               </div>
               <p className="text-xs leading-relaxed" style={{ color: safetyDescColor }}>
                 {fablab.safety === "safe"
-                  ? "Les conditions d'air ont été vérifiées. Cet espace est sûr pour tous les utilisateurs."
+                  ? "Aucun risque. L'accès est autorisé."
                   : fablab.safety === "caution"
-                  ? "Des précautions sont recommandées. Consultez le responsable avant d'utiliser certaines machines."
-                  : "L'accès à cet espace est temporairement interdit. Contactez l'établissement pour plus d'informations."}
+                  ? "Accès autorisé, mais avec attention."
+                  : "Danger : l'air est trop pollué. L'accès est interdit."}
               </p>
             </div>
 

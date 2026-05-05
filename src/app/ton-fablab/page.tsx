@@ -15,9 +15,9 @@ import type { FabLab } from "@/types";
 /* ── Safety filter config ── */
 const FILTERS = [
   { id: "all",     label: "Tous",      icon: Sparkles,      color: "#3b82f6" },
-  { id: "safe",    label: "Safe",      icon: CheckCircle2,  color: "#10b981" },
-  { id: "caution", label: "Attention", icon: AlertTriangle, color: "#f59e0b" },
-  { id: "danger",  label: "Interdit",  icon: Ban,           color: "#ef4444" },
+  { id: "safe",    label: "Optimal",   icon: CheckCircle2,  color: "#10b981" },
+  { id: "caution", label: "Alerte",    icon: AlertTriangle, color: "#f59e0b" },
+  { id: "danger",  label: "Danger",    icon: Ban,           color: "#ef4444" },
 ] as const;
 type FilterId = typeof FILTERS[number]["id"];
 
@@ -195,9 +195,9 @@ export default function TonFabLabPage() {
             }}
           >
             {[
-              { count: safeCount,   color: "#10b981", label: "Sécurisés" },
-              { count: warnCount,   color: "#f59e0b", label: "Attention" },
-              { count: dangerCount, color: "#ef4444", label: "Interdits" },
+              { count: safeCount,   color: "#10b981", label: "Optimaux" },
+              { count: warnCount,   color: "#f59e0b", label: "Alertes" },
+              { count: dangerCount, color: "#ef4444", label: "Dangers" },
             ].map(({ count, color, label }) => (
               <div key={label} className="flex flex-col items-center py-3 gap-0.5" style={{ borderColor: stripDivider }}>
                 <span className="font-display font-bold text-xl" style={{ color }}>{count}</span>

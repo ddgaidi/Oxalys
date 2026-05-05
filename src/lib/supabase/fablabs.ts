@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
-import type { FabLab, FabLabDB } from "@/types";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { FabLab, FabLabDB, SafetyLevel, StationDB } from "@/types";
 
 /** Parse the `adresse` field: "City · ZipCode · Full address" */
 function parseAdresse(adresse: string): {
@@ -15,8 +16,60 @@ function parseAdresse(adresse: string): {
   };
 }
 
+export function safetyFromAirQualityAverage(airQualityAverage?: number | null): SafetyLevel {
+  if (typeof airQualityAverage !== "number" || !Number.isFinite(airQualityAverage)) {
+    return "safe";
+  }
+
+  if (airQualityAverage >= 300) return "danger";
+  if (airQualityAverage >= 100) return "caution";
+  return "safe";
+}
+
+function toFiniteNumber(value: StationDB["air_qualite"]): number | null {
+  const numberValue = typeof value === "number" ? value : Number(value);
+  return Number.isFinite(numberValue) ? numberValue : null;
+}
+
+export async function fetchAirQualityAverages(
+  supabase: SupabaseClient,
+  fablabIds: string[]
+): Promise<Map<string, number>> {
+  if (fablabIds.length === 0) return new Map();
+
+  const { data, error } = await supabase
+    .from("station")
+    .select("fablab_id, air_qualite")
+    .in("fablab_id", fablabIds);
+
+  if (error) {
+    console.error("[fetchAirQualityAverages]", error.message);
+    return new Map();
+  }
+
+  const totals = new Map<string, { sum: number; count: number }>();
+  for (const station of (data ?? []) as StationDB[]) {
+    if (!station.fablab_id) continue;
+
+    const airQuality = toFiniteNumber(station.air_qualite);
+    if (airQuality === null) continue;
+
+    const total = totals.get(station.fablab_id) ?? { sum: 0, count: 0 };
+    total.sum += airQuality;
+    total.count += 1;
+    totals.set(station.fablab_id, total);
+  }
+
+  return new Map(
+    [...totals.entries()].map(([fablabId, total]) => [
+      fablabId,
+      total.sum / total.count,
+    ])
+  );
+}
+
 /** Map a raw DB row to the normalised FabLab used in the UI */
-export function dbToFabLab(db: FabLabDB): FabLab {
+export function dbToFabLab(db: FabLabDB, airQualityAverage?: number): FabLab {
   const { city, zip_code, address } = parseAdresse(db.adresse);
   return {
     id: db.id,
@@ -27,7 +80,8 @@ export function dbToFabLab(db: FabLabDB): FabLab {
     city,
     address: address || undefined,
     cover_url: db.image ?? undefined,
-    safety: "safe",
+    safety: safetyFromAirQualityAverage(airQualityAverage),
+    air_quality_average: airQualityAverage,
     equipment: db.equipements ?? [],
     website: db.lien ?? undefined,
     created_at: db.created_at,
@@ -46,7 +100,14 @@ export async function fetchFabLabs(): Promise<FabLab[]> {
     console.error("[fetchFabLabs]", error.message);
     return [];
   }
-  return (data as FabLabDB[]).map(dbToFabLab);
+
+  const fablabs = (data ?? []) as FabLabDB[];
+  const airQualityAverages = await fetchAirQualityAverages(
+    supabase as SupabaseClient,
+    fablabs.map((fablab) => fablab.id)
+  );
+
+  return fablabs.map((fablab) => dbToFabLab(fablab, airQualityAverages.get(fablab.id)));
 }
 
 /** Fetch a single fablab by UUID — client-side only */
@@ -59,5 +120,8 @@ export async function fetchFabLabById(id: string): Promise<FabLab | null> {
     .single();
 
   if (error || !data) return null;
-  return dbToFabLab(data as FabLabDB);
+
+  const fablab = data as FabLabDB;
+  const airQualityAverages = await fetchAirQualityAverages(supabase as SupabaseClient, [fablab.id]);
+  return dbToFabLab(fablab, airQualityAverages.get(fablab.id));
 }
