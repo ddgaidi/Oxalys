@@ -26,6 +26,13 @@ function toFiniteNumber(value: StationDB["air_qualite"]): number | null {
   return Number.isFinite(numberValue) ? numberValue : null;
 }
 
+function isStationOffline(station: StationDB): boolean {
+  return (
+    !station.last_seen_at ||
+    Date.now() - new Date(station.last_seen_at).getTime() > 10000
+  );
+}
+
 export async function fetchAirQualityAverages(
   supabase: SupabaseClient,
   fablabIds: string[]
@@ -34,7 +41,7 @@ export async function fetchAirQualityAverages(
 
   const { data, error } = await supabase
     .from("station")
-    .select("fablab_id, air_qualite")
+    .select("fablab_id, air_qualite, last_seen_at")
     .in("fablab_id", fablabIds);
 
   if (error) {
@@ -45,6 +52,7 @@ export async function fetchAirQualityAverages(
   const totals = new Map<string, { sum: number; count: number }>();
   for (const station of (data ?? []) as StationDB[]) {
     if (!station.fablab_id) continue;
+    if (isStationOffline(station)) continue;
 
     const airQuality = toFiniteNumber(station.air_qualite);
     if (airQuality === null) continue;

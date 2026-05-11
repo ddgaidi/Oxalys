@@ -30,6 +30,7 @@ export interface FabLabDB {
 export interface StationDB {
   fablab_id: string | null;
   air_qualite: number | string | null;
+  last_seen_at: string | null;
 }
 
 /** Normalised FabLab used throughout the UI */
