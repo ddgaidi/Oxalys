@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b175b340-5ccc-4dc9-9c84-a3cfbed42c66" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sensor-simulator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sensor-simulator.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,7 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="55" />
+    <option name="cachedIndexableFilesCount" value="54" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -134,6 +134,7 @@
       <workItem from="1778000162103" duration="3224000" />
       <workItem from="1778009361352" duration="15000" />
       <workItem from="1778015009874" duration="1356000" />
+      <workItem from="1778491282610" duration="906000" />
     </task>
     <servers />
   </component>
