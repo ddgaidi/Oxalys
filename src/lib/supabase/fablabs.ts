@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/client";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { FabLab, FabLabDB, SafetyLevel, StationDB } from "@/types";
+import { safetyFromAirQualityValue } from "@/lib/air-quality";
 
 /** Parse the `adresse` field: "City · ZipCode · Full address" */
 function parseAdresse(adresse: string): {
@@ -17,13 +18,7 @@ function parseAdresse(adresse: string): {
 }
 
 export function safetyFromAirQualityAverage(airQualityAverage?: number | null): SafetyLevel {
-  if (typeof airQualityAverage !== "number" || !Number.isFinite(airQualityAverage)) {
-    return "safe";
-  }
-
-  if (airQualityAverage >= 300) return "danger";
-  if (airQualityAverage >= 100) return "caution";
-  return "safe";
+  return safetyFromAirQualityValue(airQualityAverage);
 }
 
 function toFiniteNumber(value: StationDB["air_qualite"]): number | null {

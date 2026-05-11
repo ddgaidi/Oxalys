@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   LogOut, MapPin, Mail, Phone, Heart, Star,
-  Plus, Cpu, CheckCircle2, AlertTriangle, Ban, User,
+  Plus, Cpu, AlertCircle, CheckCircle2, AlertTriangle, Ban, User, WifiOff,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchFabLabById } from "@/lib/supabase/fablabs";
@@ -16,9 +16,11 @@ import type { FabLab } from "@/types";
 
 /* ── Safety config ── */
 const SAFETY = {
-  safe:    { color: "#10b981", Icon: CheckCircle2, label: "Safe" },
-  caution: { color: "#f59e0b", Icon: AlertTriangle, label: "Attention" },
-  danger:  { color: "#ef4444", Icon: Ban,           label: "Interdit" },
+  optimal: { color: "#10b981", Icon: CheckCircle2,  label: "Optimal" },
+  medium:  { color: "#facc15", Icon: AlertCircle,   label: "Moyen" },
+  alert:   { color: "#f97316", Icon: AlertTriangle, label: "Alerte" },
+  danger:  { color: "#ef4444", Icon: Ban,           label: "Danger" },
+  offline: { color: "#94a3b8", Icon: WifiOff,       label: "Hors service" },
 };
 
 const GENRE_LABEL: Record<string, string> = {

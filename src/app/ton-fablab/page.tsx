@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
-  Search, CheckCircle2, AlertTriangle, Ban,
+  Search, AlertCircle, CheckCircle2, AlertTriangle, Ban, WifiOff,
   Sparkles
 } from "lucide-react";
 import FabLabGridCard from "./FabLabGridCard";
@@ -16,10 +16,12 @@ const AIR_QUALITY_POLLING_INTERVAL_MS = 1000;
 
 /* ── Safety filter config ── */
 const FILTERS = [
-  { id: "all",     label: "Tous",      icon: Sparkles,      color: "#3b82f6" },
-  { id: "safe",    label: "Optimal",   icon: CheckCircle2,  color: "#10b981" },
-  { id: "caution", label: "Alerte",    icon: AlertTriangle, color: "#f59e0b" },
-  { id: "danger",  label: "Danger",    icon: Ban,           color: "#ef4444" },
+  { id: "all",     label: "Tous",         icon: Sparkles,      color: "#3b82f6" },
+  { id: "optimal", label: "Optimal",      icon: CheckCircle2,  color: "#10b981" },
+  { id: "medium",  label: "Moyen",        icon: AlertCircle,   color: "#facc15" },
+  { id: "alert",   label: "Alerte",       icon: AlertTriangle, color: "#f97316" },
+  { id: "danger",  label: "Danger",       icon: Ban,           color: "#ef4444" },
+  { id: "offline", label: "Hors service", icon: WifiOff,       color: "#94a3b8" },
 ] as const;
 type FilterId = typeof FILTERS[number]["id"];
 
@@ -137,9 +139,11 @@ export default function TonFabLabPage() {
     ...filtered.filter((f) => !favorites.includes(f.id)),
   ], [filtered, favorites]);
 
-  const safeCount   = fablabs.filter((f) => f.safety === "safe").length;
-  const warnCount   = fablabs.filter((f) => f.safety === "caution").length;
-  const dangerCount = fablabs.filter((f) => f.safety === "danger").length;
+  const optimalCount = fablabs.filter((f) => f.safety === "optimal").length;
+  const mediumCount  = fablabs.filter((f) => f.safety === "medium").length;
+  const alertCount   = fablabs.filter((f) => f.safety === "alert").length;
+  const dangerCount  = fablabs.filter((f) => f.safety === "danger").length;
+  const offlineCount = fablabs.filter((f) => f.safety === "offline").length;
 
   /* ── Theme-aware tokens ── */
   const pageBg   = isDark
@@ -228,9 +232,9 @@ export default function TonFabLabPage() {
 
       {/* ── Stats strip ── */}
       {!loading && (
-        <div className="relative z-10 max-w-3xl mx-auto px-5 mb-8 animate-counter">
+        <div className="relative z-10 max-w-4xl mx-auto px-5 mb-8 animate-counter">
           <div
-            className="grid grid-cols-3 divide-x rounded-2xl overflow-hidden"
+            className="grid grid-cols-5 divide-x rounded-2xl overflow-hidden"
             style={{
               border: `1px solid ${stripBorder}`,
               background: stripBg,
@@ -238,9 +242,11 @@ export default function TonFabLabPage() {
             }}
           >
             {[
-              { count: safeCount,   color: "#10b981", label: "Optimaux" },
-              { count: warnCount,   color: "#f59e0b", label: "Alertes" },
-              { count: dangerCount, color: "#ef4444", label: "Dangers" },
+              { count: optimalCount, color: "#10b981", label: "Optimaux" },
+              { count: mediumCount,  color: "#facc15", label: "Moyens" },
+              { count: alertCount,   color: "#f97316", label: "Alertes" },
+              { count: dangerCount,  color: "#ef4444", label: "Dangers" },
+              { count: offlineCount, color: "#94a3b8", label: "HS" },
             ].map(({ count, color, label }) => (
               <div key={label} className="flex flex-col items-center py-3 gap-0.5" style={{ borderColor: stripDivider }}>
                 <span className="font-display font-bold text-xl" style={{ color }}>{count}</span>

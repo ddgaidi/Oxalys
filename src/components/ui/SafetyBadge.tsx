@@ -1,5 +1,5 @@
 import type { SafetyLevel } from "@/types";
-import { CheckCircle2, AlertTriangle, Ban } from "lucide-react";
+import { AlertCircle, AlertTriangle, Ban, CheckCircle2, WifiOff, type LucideIcon } from "lucide-react";
 
 interface Props {
   level: SafetyLevel;
@@ -8,28 +8,42 @@ interface Props {
 
 const SAFETY_CONFIG: Record<
   SafetyLevel,
-  { label: string; color: string; bg: string; border: string; icon: typeof CheckCircle2 }
+  { label: string; color: string; bg: string; border: string; icon: LucideIcon }
 > = {
-  safe: {
-    label: "Accessible – 100% Safe",
+  optimal: {
+    label: "Optimal",
     color: "text-emerald-600 dark:text-emerald-400",
     bg: "bg-emerald-50 dark:bg-emerald-400/10",
     border: "border-emerald-200 dark:border-emerald-400/25",
     icon: CheckCircle2,
   },
-  caution: {
-    label: "Accessible – Faire attention",
-    color: "text-amber-600 dark:text-amber-400",
-    bg: "bg-amber-50 dark:bg-amber-400/10",
-    border: "border-amber-200 dark:border-amber-400/25",
+  medium: {
+    label: "Moyen",
+    color: "text-yellow-600 dark:text-yellow-400",
+    bg: "bg-yellow-50 dark:bg-yellow-400/10",
+    border: "border-yellow-200 dark:border-yellow-400/25",
+    icon: AlertCircle,
+  },
+  alert: {
+    label: "Alerte",
+    color: "text-orange-600 dark:text-orange-400",
+    bg: "bg-orange-50 dark:bg-orange-400/10",
+    border: "border-orange-200 dark:border-orange-400/25",
     icon: AlertTriangle,
   },
   danger: {
-    label: "Interdit d'accès",
+    label: "Danger",
     color: "text-red-600 dark:text-red-400",
     bg: "bg-red-50 dark:bg-red-400/10",
     border: "border-red-200 dark:border-red-400/25",
     icon: Ban,
+  },
+  offline: {
+    label: "Hors service",
+    color: "text-slate-500 dark:text-slate-400",
+    bg: "bg-slate-100 dark:bg-slate-400/10",
+    border: "border-slate-200 dark:border-slate-400/25",
+    icon: WifiOff,
   },
 };
 

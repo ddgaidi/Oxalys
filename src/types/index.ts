@@ -2,7 +2,7 @@
 
 export type Gender = "homme" | "femme" | "non-binaire" | "non-precise";
 
-export type SafetyLevel = "safe" | "caution" | "danger";
+export type SafetyLevel = "optimal" | "medium" | "alert" | "danger" | "offline";
 
 export interface Profile {
   id: string;

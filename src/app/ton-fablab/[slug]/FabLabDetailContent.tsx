@@ -5,8 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowLeft, Globe, Mail, Phone, MapPin,
-  Wrench, CheckCircle2, AlertTriangle, Ban,
+  Wrench, AlertCircle, CheckCircle2, AlertTriangle, Ban, WifiOff,
   Cpu, ExternalLink,
+  type LucideIcon,
 } from "lucide-react";
 import { useTheme } from "@/lib/context/ThemeContext";
 import { fetchFabLabById } from "@/lib/supabase/fablabs";
@@ -16,10 +17,47 @@ import type { FabLab, SafetyLevel } from "@/types";
 const AIR_QUALITY_POLLING_INTERVAL_MS = 1000;
 
 /* ── Safety config ── */
-const SAFETY: Record<SafetyLevel, { color: string; bg: string; border: string; label: string; icon: typeof CheckCircle2 }> = {
-  safe:    { color: "#10b981", bg: "rgba(16,185,129,0.15)",  border: "rgba(16,185,129,0.35)",  label: "Optimal", icon: CheckCircle2 },
-  caution: { color: "#f59e0b", bg: "rgba(245,158,11,0.15)", border: "rgba(245,158,11,0.35)",  label: "Alerte",  icon: AlertTriangle },
-  danger:  { color: "#ef4444", bg: "rgba(239,68,68,0.15)",  border: "rgba(239,68,68,0.35)",   label: "Danger",  icon: Ban },
+const SAFETY: Record<SafetyLevel, { color: string; bg: string; border: string; label: string; icon: LucideIcon; description: string }> = {
+  optimal: {
+    color: "#10b981",
+    bg: "rgba(16,185,129,0.15)",
+    border: "rgba(16,185,129,0.35)",
+    label: "Optimal",
+    icon: CheckCircle2,
+    description: "Qualité de l'air optimale. L'accès est autorisé.",
+  },
+  medium: {
+    color: "#facc15",
+    bg: "rgba(250,204,21,0.15)",
+    border: "rgba(250,204,21,0.35)",
+    label: "Moyen",
+    icon: AlertCircle,
+    description: "Qualité de l'air moyenne. L'accès reste autorisé avec vigilance.",
+  },
+  alert: {
+    color: "#f97316",
+    bg: "rgba(249,115,22,0.15)",
+    border: "rgba(249,115,22,0.35)",
+    label: "Alerte",
+    icon: AlertTriangle,
+    description: "Niveau d'alerte. Réduisez l'exposition et vérifiez la ventilation.",
+  },
+  danger: {
+    color: "#ef4444",
+    bg: "rgba(239,68,68,0.15)",
+    border: "rgba(239,68,68,0.35)",
+    label: "Danger",
+    icon: Ban,
+    description: "Danger : l'air est trop pollué. L'accès est interdit.",
+  },
+  offline: {
+    color: "#94a3b8",
+    bg: "rgba(148,163,184,0.15)",
+    border: "rgba(148,163,184,0.35)",
+    label: "Hors service",
+    icon: WifiOff,
+    description: "Aucune donnée capteur disponible. Le statut ne peut pas être certifié.",
+  },
 };
 
 export default function FabLabDetailContent({ fablab: initialFabLab }: { fablab: FabLab }) {
@@ -290,11 +328,7 @@ export default function FabLabDetailContent({ fablab: initialFabLab }: { fablab:
                 </div>
               </div>
               <p className="text-xs leading-relaxed" style={{ color: safetyDescColor }}>
-                {fablab.safety === "safe"
-                  ? "Aucun risque. L'accès est autorisé."
-                  : fablab.safety === "caution"
-                  ? "Accès autorisé, mais avec attention."
-                        : "Danger : l'air est trop pollué. L'accès est interdit."}
+                {safety.description}
               </p>
             </div>
 

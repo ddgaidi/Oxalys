@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { Heart, MapPin, ArrowUpRight, CheckCircle2, AlertTriangle, Ban } from "lucide-react";
+import { AlertCircle, AlertTriangle, ArrowUpRight, Ban, CheckCircle2, Heart, MapPin, WifiOff } from "lucide-react";
 import type { FabLab } from "@/types";
 
 /* ── Unique gradient per card (from name hash) ── */
@@ -36,9 +36,11 @@ function cardGradient(name: string, isDark: boolean) {
 
 /* ── Safety config ── */
 const SAFETY = {
-  safe:    { color: "#10b981", label: "Optimal", Icon: CheckCircle2 },
-  caution: { color: "#f59e0b", label: "Alerte",  Icon: AlertTriangle },
-  danger:  { color: "#ef4444", label: "Danger",  Icon: Ban },
+  optimal: { color: "#10b981", label: "Optimal",      Icon: CheckCircle2 },
+  medium:  { color: "#facc15", label: "Moyen",        Icon: AlertCircle },
+  alert:   { color: "#f97316", label: "Alerte",       Icon: AlertTriangle },
+  danger:  { color: "#ef4444", label: "Danger",       Icon: Ban },
+  offline: { color: "#94a3b8", label: "Hors service", Icon: WifiOff },
 };
 
 interface Props {
