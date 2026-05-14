@@ -1,13 +1,18 @@
 "use client";
 
+/*
+ * Commentaires de structure : Gere le bouton favori dans la fiche detail FabLab.
+ */
 import { Heart } from "lucide-react";
 import { useFavorites } from "@/lib/hooks/useFavorites";
 
+// Contrat local : precise les valeurs manipulees uniquement dans ce fichier.
 interface Props {
   fablabId: string;
   isDark: boolean;
 }
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function FabLabFavoriteButton({ fablabId, isDark }: Props) {
   const { favorites, toggleFavorite } = useFavorites(undefined);
   const isFav = favorites.includes(fablabId);

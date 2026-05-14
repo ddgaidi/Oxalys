@@ -1,3 +1,6 @@
+/*
+ * Commentaires de structure : Declare Tailwind, les variables globales, les polices et les animations partagees.
+ */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;

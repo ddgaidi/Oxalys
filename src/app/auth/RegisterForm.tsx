@@ -1,13 +1,18 @@
 "use client";
 
+/*
+ * Commentaires de structure : Gere l inscription utilisateur et la creation du profil associe.
+ */
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { fetchFabLabs } from "@/lib/supabase/fablabs";
 import type { Gender, FabLab } from "@/types";
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const STEPS = ["Identité", "Contact", "FabLab", "Sécurité"];
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const GENDERS: { value: Gender; label: string }[] = [
   { value: "homme", label: "👨 Homme" },
   { value: "femme", label: "👩 Femme" },
@@ -15,6 +20,7 @@ const GENDERS: { value: Gender; label: string }[] = [
   { value: "non-precise", label: "🔒 Non précisé" },
 ];
 
+// Contrat local : precise les valeurs manipulees uniquement dans ce fichier.
 interface FormData {
   gender: Gender | "";
   firstName: string;
@@ -26,6 +32,7 @@ interface FormData {
   confirmPassword: string;
 }
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function RegisterForm() {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);

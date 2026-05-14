@@ -1,5 +1,8 @@
 "use client";
 
+/*
+ * Commentaires de structure : Ajoute les interactions client de la page tarifs.
+ */
 import { useState } from "react";
 import PlanCard from "@/components/ui/PlanCard";
 import TrustedSection from "@/components/ui/TrustedSection";
@@ -7,6 +10,7 @@ import { PLANS_DATA } from "@/lib/data";
 import { Mail, ShieldCheck, BarChart3, Building2 } from "lucide-react";
 import type { FabLab } from "@/types";
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const HOW_IT_WORKS = [
   {
     icon: Building2,
@@ -25,6 +29,7 @@ const HOW_IT_WORKS = [
   },
 ];
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function TarifsClient({ fablabs = [] }: { fablabs?: FabLab[] }) {
   const [annual, setAnnual] = useState(false);
 

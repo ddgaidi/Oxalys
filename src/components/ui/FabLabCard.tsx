@@ -1,10 +1,14 @@
 "use client";
 
+/*
+ * Commentaires de structure : Affiche une carte FabLab reutilisable avec favori et statut.
+ */
 import Image from "next/image";
 import { Heart, MapPin, ChevronRight } from "lucide-react";
 import type { FabLab } from "@/types";
 import SafetyBadge from "./SafetyBadge";
 
+// Contrat local : precise les valeurs manipulees uniquement dans ce fichier.
 interface Props {
   fablab: FabLab;
   isFavorite: boolean;
@@ -12,6 +16,7 @@ interface Props {
   onClick: () => void;
 }
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function FabLabCard({
   fablab,
   isFavorite,

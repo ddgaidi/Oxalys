@@ -1,9 +1,13 @@
 "use client";
 
+/*
+ * Commentaires de structure : Explique la proposition de valeur Oxalys et ses benefices.
+ */
 import { useEffect, useRef, useState } from "react";
 import { Target, Telescope, Cpu, Users2 } from "lucide-react";
 import { useTheme } from "@/lib/context/ThemeContext";
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const STEPS = [
   {
     num: "01",
@@ -39,6 +43,7 @@ const STEPS = [
   },
 ];
 
+// Helper interne : isole une transformation ou une regle metier du rendu principal.
 function StepCard({ step, visible }: { step: typeof STEPS[0]; visible: boolean }) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
@@ -110,6 +115,7 @@ function StepCard({ step, visible }: { step: typeof STEPS[0]; visible: boolean }
   );
 }
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function AboutSection() {
   const { theme } = useTheme();
   const isDark = theme === "dark";

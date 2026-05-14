@@ -1,11 +1,16 @@
+/*
+ * Commentaires de structure : Affiche un badge visuel pour le niveau de securite.
+ */
 import type { SafetyLevel } from "@/types";
 import { AlertCircle, AlertTriangle, Ban, CheckCircle2, WifiOff, type LucideIcon } from "lucide-react";
 
+// Contrat local : precise les valeurs manipulees uniquement dans ce fichier.
 interface Props {
   level: SafetyLevel;
   size?: "sm" | "md" | "lg";
 }
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const SAFETY_CONFIG: Record<
   SafetyLevel,
   { label: string; color: string; bg: string; border: string; icon: LucideIcon }
@@ -47,14 +52,17 @@ const SAFETY_CONFIG: Record<
   },
 };
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const SIZE_CLASSES = {
   sm: "text-xs px-2.5 py-1 gap-1.5",
   md: "text-sm px-3 py-1.5 gap-2",
   lg: "text-sm px-4 py-2 gap-2",
 };
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const ICON_SIZES = { sm: 12, md: 14, lg: 16 };
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function SafetyBadge({ level, size = "md" }: Props) {
   const cfg = SAFETY_CONFIG[level];
   const Icon = cfg.icon;

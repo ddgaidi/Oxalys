@@ -1,13 +1,18 @@
 "use client";
 
+/*
+ * Commentaires de structure : Affiche une offre tarifaire avec ses avantages et limites.
+ */
 import { Check, Minus } from "lucide-react";
 import type { Plan } from "@/types";
 
+// Contrat local : precise les valeurs manipulees uniquement dans ce fichier.
 interface Props {
   plan: Plan;
   annual: boolean;
 }
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function PlanCard({ plan, annual }: Props) {
   const price = annual ? plan.annual_price : plan.monthly_price;
 

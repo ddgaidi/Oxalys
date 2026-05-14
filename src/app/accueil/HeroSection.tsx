@@ -1,5 +1,8 @@
 "use client";
 
+/*
+ * Commentaires de structure : Construit le hero de la page d accueil avec l accroche principale.
+ */
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Wind, Thermometer, Activity, Wifi, Shield } from "lucide-react";
@@ -30,6 +33,7 @@ const PARTICLE_PARAMS = [
   { s:2, t:"5%",  l:"70%", d:"0.3s",  dur:"5.5s",o:0.06 },
   { s:3, t:"48%", l:"78%", d:"2.5s",  dur:"7s",  o:0.05 },
 ];
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const PARTICLE_COLORS = ["#3b82f6","#10b981","#8b5cf6"];
 
 /* Positions orbitales fixes (calculées une seule fois, pas au render) */
@@ -43,8 +47,10 @@ const ORBIT_POSITIONS = SENSORS.map((_, i) => {
   };
 });
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const WORDS = ["Protégez", "vos", "espaces", "de création"];
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function HeroSection() {
   const { theme } = useTheme();
   const isDark = theme === "dark";

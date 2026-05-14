@@ -1,5 +1,8 @@
 "use client";
 
+/*
+ * Commentaires de structure : Presente la station Oxalys, ses capteurs et son fonctionnement.
+ */
 import { useRef, useState, useEffect } from "react";
 import { Cpu, Wifi, Wind, Monitor, CircuitBoard, AlertTriangle, Zap } from "lucide-react";
 import { useTheme } from "@/lib/context/ThemeContext";
@@ -7,13 +10,17 @@ import { useTheme } from "@/lib/context/ThemeContext";
 /* ── Data ─────────────────────────────────────────────────────────────────── */
 
 const r = 35; // pentagon radius as % of container (slightly inset so all nodes stay in view)
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const CX = 50;
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const CY = 50;
 
 /** viewBox 0–100: start past hub glow (~72px ⌀), end just inside card face */
 const HUB_LINE_INSET = 8;
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const NODE_LINE_INSET = 2.5;
 
+// Helper interne : isole une transformation ou une regle metier du rendu principal.
 function toPos(angleDeg: number) {
   const rad = (angleDeg * Math.PI) / 180;
   return {
@@ -22,6 +29,7 @@ function toPos(angleDeg: number) {
   };
 }
 
+// Helper interne : isole une transformation ou une regle metier du rendu principal.
 function lineEndpoints(angleDeg: number) {
   const pos = toPos(angleDeg);
   const dx = pos.x - CX;
@@ -37,6 +45,7 @@ function lineEndpoints(angleDeg: number) {
   };
 }
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const FLOAT_CLASSES = [
   "node-float-a",
   "node-float-b",
@@ -45,6 +54,7 @@ const FLOAT_CLASSES = [
   "node-float-e",
 ];
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const COMPS = [
   {
     id: "rpi",
@@ -110,6 +120,7 @@ const COMPS = [
 
 /* ── Component ───────────────────────────────────────────────────────────── */
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function StationSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [triggered, setTriggered] = useState(false);

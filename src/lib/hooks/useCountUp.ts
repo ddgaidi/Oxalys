@@ -1,7 +1,11 @@
 "use client";
 
+/*
+ * Commentaires de structure : Anime progressivement une valeur numerique pour les blocs statistiques.
+ */
 import { useState, useEffect, useRef } from "react";
 
+// Fonction exportee : point d entree reutilisable par les pages ou composants.
 export function useCountUp(target: number, duration = 2000, trigger = false) {
   const [count, setCount] = useState(0);
   const started = useRef(false);

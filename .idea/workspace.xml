@@ -5,7 +5,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b175b340-5ccc-4dc9-9c84-a3cfbed42c66" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/ShadcnHelperSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ShadcnHelperSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accueil/AboutSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accueil/AboutSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accueil/HeroSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accueil/HeroSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accueil/PartnersSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accueil/PartnersSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accueil/StationSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accueil/StationSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accueil/StatsSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accueil/StatsSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/RegisterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/RegisterForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/profil/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profil/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/tarifs/TarifsClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tarifs/TarifsClient.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/tarifs/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tarifs/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/FabLabGridCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/FabLabGridCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabDetailContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabDetailContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabFavoriteButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabFavoriteButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/FabLabCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/FabLabCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/OxalysLogo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/OxalysLogo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/PlanCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/PlanCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/SafetyBadge.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/SafetyBadge.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/TrustedSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/TrustedSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/air-quality.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/air-quality.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/context/ThemeContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/context/ThemeContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/data.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/hooks/useCountUp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/hooks/useCountUp.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/hooks/useFavorites.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/hooks/useFavorites.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/supabase/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/supabase/client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/supabase/fablabs.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/supabase/fablabs.server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/supabase/fablabs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/supabase/fablabs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/supabase/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/supabase/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,6 +175,10 @@
       <workItem from="1778491282610" duration="1315000" />
       <workItem from="1778493797508" duration="608000" />
       <workItem from="1778514902934" duration="1408000" />
+      <workItem from="1778534112463" duration="1493000" />
+      <workItem from="1778599216912" duration="156000" />
+      <workItem from="1778759714272" duration="5000" />
+      <workItem from="1778764102575" duration="69000" />
     </task>
     <servers />
   </component>

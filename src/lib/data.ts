@@ -1,5 +1,9 @@
+/*
+ * Commentaires de structure : Regroupe les donnees statiques utilisees en fallback ou pour alimenter les sections marketing.
+ */
 import type { FabLab, Plan } from "@/types";
 
+// Donnees ou configuration exportees pour etre reutilisees ailleurs dans l application.
 export const FABLABS_MOCK: FabLab[] = [
   {
     id: "mock-1",
@@ -102,6 +106,7 @@ export const FABLABS_MOCK: FabLab[] = [
   },
 ];
 
+// Donnees ou configuration exportees pour etre reutilisees ailleurs dans l application.
 export const PLANS_DATA: Plan[] = [
   {
     id: "starter",
@@ -169,6 +174,7 @@ export const PLANS_DATA: Plan[] = [
   },
 ];
 
+// Donnees ou configuration exportees pour etre reutilisees ailleurs dans l application.
 export const PARTNERS = [
   "TechCorp",
   "InnovaLab",
@@ -178,6 +184,7 @@ export const PARTNERS = [
   "OpenMake",
 ];
 
+// Donnees ou configuration exportees pour etre reutilisees ailleurs dans l application.
 export const KEY_STATS = [
   { value: 1200, suffix: "+", label: "FabLabs certifiés", icon: "🏭" },
   { value: 48, suffix: "", label: "Départements couverts", icon: "🗺️" },

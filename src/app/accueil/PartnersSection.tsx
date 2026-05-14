@@ -1,5 +1,8 @@
 "use client";
 
+/*
+ * Commentaires de structure : Affiche les partenaires et signaux de confiance.
+ */
 import { useEffect, useState } from "react";
 import { useTheme } from "@/lib/context/ThemeContext";
 import { fetchFabLabs } from "@/lib/supabase/fablabs";
@@ -13,8 +16,10 @@ const TECH_COMPANIES = [
   "Alstom", "Bull", "Sopra Steria", "Ubisoft",
 ];
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const ACCENT_COLORS = ["#3b82f6","#10b981","#8b5cf6","#f59e0b","#ec4899","#06b6d4","#f97316","#84cc16"];
 
+// Helper interne : isole une transformation ou une regle metier du rendu principal.
 function PillRow({
   items,
   direction,
@@ -76,6 +81,7 @@ function PillRow({
   );
 }
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function PartnersSection() {
   const { theme } = useTheme();
   const isDark = theme === "dark";

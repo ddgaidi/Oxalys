@@ -1,13 +1,18 @@
 "use client";
 
+/*
+ * Commentaires de structure : Affiche l ecran d authentification et bascule entre connexion et inscription.
+ */
 import { useState } from "react";
 import OxalysLogo from "@/components/ui/OxalysLogo";
 import { useTheme } from "@/lib/context/ThemeContext";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 
+// Type local : limite les valeurs possibles et securise les branches de logique.
 type Mode = "login" | "register";
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function AuthPage() {
   const [mode, setMode] = useState<Mode>("login");
   const { theme } = useTheme();

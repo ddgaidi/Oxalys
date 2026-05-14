@@ -1,27 +1,34 @@
 "use client";
 
+/*
+ * Commentaires de structure : Affiche le pied de page et les liens de navigation secondaires.
+ */
 import Link from "next/link";
 import OxalysLogo from "@/components/ui/OxalysLogo";
 import { useTheme } from "@/lib/context/ThemeContext";
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const PRODUCT_LINKS = [
   { label: "Accueil", href: "/" },
   { label: "Ton FabLab", href: "/ton-fablab" },
   { label: "Tarifs", href: "/tarifs" },
 ];
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const COMPANY_LINKS = [
   { label: "À propos", href: "/a-propos" },
   { label: "Contact", href: "/contact" },
   { label: "Presse", href: "/presse" },
 ];
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const LEGAL_LINKS = [
   { label: "Mentions légales", href: "/mentions-legales" },
   { label: "CGU", href: "/cgu" },
   { label: "Confidentialité", href: "/confidentialite" },
 ];
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function Footer() {
   const { theme } = useTheme();
   const isDark = theme === "dark";

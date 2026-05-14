@@ -1,5 +1,9 @@
+/*
+ * Commentaires de structure : Traduit une valeur de qualite de l air en niveau de securite exploitable par l interface.
+ */
 import type { SafetyLevel } from "@/types";
 
+// Donnees ou configuration exportees pour etre reutilisees ailleurs dans l application.
 export const AIR_QUALITY_THRESHOLDS = {
   optimalMaxExclusive: 180,
   mediumMinInclusive: 180,
@@ -7,6 +11,7 @@ export const AIR_QUALITY_THRESHOLDS = {
   dangerMinInclusive: 390,
 } as const;
 
+// Fonction exportee : point d entree reutilisable par les pages ou composants.
 export function safetyFromAirQualityValue(value?: number | null): SafetyLevel {
   if (typeof value !== "number" || !Number.isFinite(value)) {
     return "offline";

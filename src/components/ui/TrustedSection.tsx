@@ -1,14 +1,19 @@
 "use client";
 
+/*
+ * Commentaires de structure : Affiche une section de confiance reutilisable.
+ */
 import { GraduationCap, Factory } from "lucide-react";
 import { useTheme } from "@/lib/context/ThemeContext";
 import type { FabLab } from "@/types";
 
+// Contrat local : precise les valeurs manipulees uniquement dans ce fichier.
 interface Props {
   title?: string;
   fablabs?: FabLab[];
 }
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function TrustedSection({
   title = "Ils nous font confiance",
   fablabs = [],

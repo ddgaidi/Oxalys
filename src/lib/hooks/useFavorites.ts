@@ -1,9 +1,14 @@
 "use client";
 
+/*
+ * Commentaires de structure : Synchronise les favoris utilisateur avec Supabase et expose une API simple aux composants.
+ */
 import { useState, useEffect, useMemo, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const LOCAL_KEY    = "oxalys_favorites";
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const MAX_FAVORITES = 5;
 
 const hasSupabase =

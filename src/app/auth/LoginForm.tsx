@@ -1,9 +1,13 @@
 "use client";
 
+/*
+ * Commentaires de structure : Gere le formulaire de connexion et la redirection apres authentification.
+ */
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function LoginForm() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");

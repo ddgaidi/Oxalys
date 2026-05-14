@@ -1,11 +1,15 @@
 "use client";
 
+/*
+ * Commentaires de structure : Construit la page tarifs avec les offres et explications commerciales.
+ */
 import { useState } from "react";
 import { Building2, Cpu, LayoutDashboard, Mail, Check, Minus } from "lucide-react";
 import { useTheme } from "@/lib/context/ThemeContext";
 import TrustedSection from "@/components/ui/TrustedSection";
 import { PLANS_DATA } from "@/lib/data";
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const HOW_IT_WORKS = [
   {
     icon: Building2,
@@ -30,6 +34,7 @@ const HOW_IT_WORKS = [
   },
 ];
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function TarifsPage() {
   const [annual, setAnnual] = useState(false);
   const { theme } = useTheme();

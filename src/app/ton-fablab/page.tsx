@@ -1,5 +1,8 @@
 "use client";
 
+/*
+ * Commentaires de structure : Liste et filtre les FabLabs disponibles avec leurs statuts de securite.
+ */
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -12,6 +15,7 @@ import { fetchFabLabs } from "@/lib/supabase/fablabs";
 import { useTheme } from "@/lib/context/ThemeContext";
 import type { FabLab } from "@/types";
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const AIR_QUALITY_POLLING_INTERVAL_MS = 1000;
 
 /* ── Safety filter config ── */
@@ -23,8 +27,10 @@ const FILTERS = [
   { id: "danger",  label: "Danger",       icon: Ban,           color: "#ef4444" },
   { id: "offline", label: "Hors service", icon: WifiOff,       color: "#94a3b8" },
 ] as const;
+// Type local : limite les valeurs possibles et securise les branches de logique.
 type FilterId = typeof FILTERS[number]["id"];
 
+// Helper interne : isole une transformation ou une regle metier du rendu principal.
 function hasFabLabAirQualityChanged(current: FabLab[], next: FabLab[]) {
   if (current.length !== next.length) return true;
 
@@ -68,6 +74,7 @@ function SkeletonCard({ isDark }: { isDark: boolean }) {
   );
 }
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function TonFabLabPage() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<FilterId>("all");

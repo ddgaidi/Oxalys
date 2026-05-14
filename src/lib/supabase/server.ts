@@ -1,6 +1,10 @@
+/*
+ * Commentaires de structure : Cree le client Supabase utilisable cote serveur avec les cookies Next.js.
+ */
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
+// Fonction exportee : point d entree reutilisable par les pages ou composants.
 export async function createServerSupabaseClient() {
   const cookieStore = await cookies();
   return createServerClient(

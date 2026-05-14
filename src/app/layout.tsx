@@ -1,9 +1,13 @@
+/*
+ * Commentaires de structure : Definit la structure globale Next.js, les metadonnees et les providers communs.
+ */
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/context/ThemeContext";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import React from "react";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "Oxalys",
@@ -17,6 +21,7 @@ export const metadata: Metadata = {
   },
 };
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function RootLayout({
   children,
 }: {
@@ -27,7 +32,10 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <Navbar />
-          <main className="min-h-screen pt-16">{children}</main>
+          <main className="min-h-screen pt-16">
+            <Analytics />
+            {children}
+          </main>
           <Footer />
         </ThemeProvider>
       </body>

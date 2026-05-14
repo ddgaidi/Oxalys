@@ -1,3 +1,6 @@
+/*
+ * Commentaires de structure : Contient les fonctions client pour recuperer et normaliser les FabLabs depuis Supabase.
+ */
 import { createClient } from "@/lib/supabase/client";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { FabLab, FabLabDB, SafetyLevel, StationDB } from "@/types";
@@ -17,15 +20,18 @@ function parseAdresse(adresse: string): {
   };
 }
 
+// Fonction exportee : point d entree reutilisable par les pages ou composants.
 export function safetyFromAirQualityAverage(airQualityAverage?: number | null): SafetyLevel {
   return safetyFromAirQualityValue(airQualityAverage);
 }
 
+// Helper interne : isole une transformation ou une regle metier du rendu principal.
 function toFiniteNumber(value: StationDB["air_qualite"]): number | null {
   const numberValue = typeof value === "number" ? value : Number(value);
   return Number.isFinite(numberValue) ? numberValue : null;
 }
 
+// Helper interne : isole une transformation ou une regle metier du rendu principal.
 function isStationOffline(station: StationDB): boolean {
   return (
     !station.last_seen_at ||
@@ -33,6 +39,7 @@ function isStationOffline(station: StationDB): boolean {
   );
 }
 
+// Fonction exportee : point d entree reutilisable par les pages ou composants.
 export async function fetchAirQualityAverages(
   supabase: SupabaseClient,
   fablabIds: string[]

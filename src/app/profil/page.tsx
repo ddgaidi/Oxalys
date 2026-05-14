@@ -1,5 +1,8 @@
 "use client";
 
+/*
+ * Commentaires de structure : Affiche le profil utilisateur, ses informations et ses FabLabs favoris.
+ */
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -23,6 +26,7 @@ const SAFETY = {
   offline: { color: "#94a3b8", Icon: WifiOff,       label: "Hors service" },
 };
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const GENRE_LABEL: Record<string, string> = {
   homme:        "Homme",
   femme:        "Femme",
@@ -30,19 +34,23 @@ const GENRE_LABEL: Record<string, string> = {
   "non-precise":"Non précisé",
 };
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const CARD_GRADIENTS = [
   ["#0f2d4a","#1a1040"], ["#0a2e1e","#0f1e30"],
   ["#1e0a2e","#2e1040"], ["#2e1a0a","#1e0a20"],
 ];
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const LIGHT_GRADIENTS = [
   ["#dbeafe","#ede9fe"], ["#d1fae5","#cffafe"],
   ["#ede9fe","#fce7f3"], ["#fef3c7","#e0f2fe"],
 ];
+// Helper interne : isole une transformation ou une regle metier du rendu principal.
 function cardGradient(name: string, isDark: boolean) {
   const list = isDark ? CARD_GRADIENTS : LIGHT_GRADIENTS;
   return `linear-gradient(135deg, ${list[name.charCodeAt(0) % list.length][0]}, ${list[name.charCodeAt(0) % list.length][1]})`;
 }
 
+// Contrat local : precise les valeurs manipulees uniquement dans ce fichier.
 interface EtudiantRow {
   id: string;
   prenom: string;

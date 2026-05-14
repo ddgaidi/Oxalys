@@ -1,5 +1,8 @@
 "use client";
 
+/*
+ * Commentaires de structure : Assemble les sections de la page d accueil publique.
+ */
 import { useTheme } from "@/lib/context/ThemeContext";
 import HeroSection from "./accueil/HeroSection";
 import StatsSection from "./accueil/StatsSection";
@@ -8,6 +11,7 @@ import PartnersSection from "./accueil/PartnersSection";
 import AboutSection from "./accueil/AboutSection";
 import TrustedSection from "@/components/ui/TrustedSection";
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function HomePage() {
   const { theme } = useTheme();
   const isDark = theme === "dark";

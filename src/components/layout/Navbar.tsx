@@ -1,5 +1,8 @@
 "use client";
 
+/*
+ * Commentaires de structure : Gere la navigation principale, le theme et les actions utilisateur.
+ */
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -9,12 +12,14 @@ import { createClient } from "@/lib/supabase/client";
 import OxalysLogo from "@/components/ui/OxalysLogo";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const NAV_LINKS = [
   { label: "Accueil",    href: "/"          },
   { label: "Tarifs",     href: "/tarifs"    },
   { label: "Ton FabLab", href: "/ton-fablab"},
 ];
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function Navbar() {
   const pathname           = usePathname();
   const router             = useRouter();

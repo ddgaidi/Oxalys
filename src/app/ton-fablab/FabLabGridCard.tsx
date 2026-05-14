@@ -1,5 +1,8 @@
 "use client";
 
+/*
+ * Commentaires de structure : Affiche une carte compacte de FabLab dans la grille de recherche.
+ */
 import { useRef } from "react";
 import Image from "next/image";
 import { AlertCircle, AlertTriangle, ArrowUpRight, Ban, CheckCircle2, Heart, MapPin, WifiOff } from "lucide-react";
@@ -16,6 +19,7 @@ const DARK_GRADIENTS = [
   ["#0a2e2e", "#102030"],
   ["#1a2e0a", "#0a1e10"],
 ];
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const LIGHT_GRADIENTS = [
   ["#dbeafe", "#ede9fe"],
   ["#d1fae5", "#cffafe"],
@@ -27,6 +31,7 @@ const LIGHT_GRADIENTS = [
   ["#d1fae5", "#fef3c7"],
 ];
 
+// Helper interne : isole une transformation ou une regle metier du rendu principal.
 function cardGradient(name: string, isDark: boolean) {
   const list = isDark ? DARK_GRADIENTS : LIGHT_GRADIENTS;
   const idx = name.charCodeAt(0) % list.length;
@@ -43,6 +48,7 @@ const SAFETY = {
   offline: { color: "#94a3b8", label: "Hors service", Icon: WifiOff },
 };
 
+// Contrat local : precise les valeurs manipulees uniquement dans ce fichier.
 interface Props {
   fablab: FabLab;
   isFavorite: boolean;
@@ -52,6 +58,7 @@ interface Props {
   isDark: boolean;
 }
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function FabLabGridCard({ fablab, isFavorite, onToggleFavorite, onClick, index, isDark }: Props) {
   const cardRef = useRef<HTMLDivElement>(null);
   const safety = SAFETY[fablab.safety];

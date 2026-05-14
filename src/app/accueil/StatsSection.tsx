@@ -1,12 +1,17 @@
 "use client";
 
+/*
+ * Commentaires de structure : Affiche les chiffres cles avec animations et theming.
+ */
 import { useEffect, useRef, useState } from "react";
 import { Building2, Map, GraduationCap } from "lucide-react";
 import { useCountUp } from "@/lib/hooks/useCountUp";
 import { useTheme } from "@/lib/context/ThemeContext";
 import { KEY_STATS } from "@/lib/data";
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const ICONS   = [Building2, Map, GraduationCap];
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const ACCENTS = [
   { color: "#3b82f6", glow: "rgba(59,130,246,0.25)",  pct: 82 },
   { color: "#10b981", glow: "rgba(16,185,129,0.25)",  pct: 67 },
@@ -15,6 +20,7 @@ const ACCENTS = [
 
 /* ── SVG progress ring ── */
 const CIRCUMFERENCE = 2 * Math.PI * 40; // r=40
+// Helper interne : isole une transformation ou une regle metier du rendu principal.
 function Ring({ pct, color, trigger }: { pct: number; color: string; trigger: boolean }) {
   const offset = CIRCUMFERENCE - (pct / 100) * CIRCUMFERENCE;
   return (
@@ -37,6 +43,7 @@ const BARS = Array.from({ length: 12 }, (_, i) => ({
   delay: (i * 0.15).toFixed(2),
 }));
 
+// Helper interne : isole une transformation ou une regle metier du rendu principal.
 function StatCard({
   index, label, value, suffix, trigger,
 }: {
@@ -110,6 +117,7 @@ function StatCard({
   );
 }
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function StatsSection() {
   const ref = useRef<HTMLDivElement>(null);
   const [triggered, setTriggered] = useState(false);

@@ -1,5 +1,8 @@
 "use client";
 
+/*
+ * Commentaires de structure : Affiche la fiche detaillee d un FabLab et rafraichit son statut capteur.
+ */
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,6 +17,7 @@ import { fetchFabLabById } from "@/lib/supabase/fablabs";
 import FabLabFavoriteButton from "./FabLabFavoriteButton";
 import type { FabLab, SafetyLevel } from "@/types";
 
+// Configuration locale qui pilote le rendu ou le comportement de ce module.
 const AIR_QUALITY_POLLING_INTERVAL_MS = 1000;
 
 /* ── Safety config ── */
@@ -60,6 +64,7 @@ const SAFETY: Record<SafetyLevel, { color: string; bg: string; border: string; l
   },
 };
 
+// Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function FabLabDetailContent({ fablab: initialFabLab }: { fablab: FabLab }) {
   const [fablab, setFablab] = useState(initialFabLab);
   const { theme } = useTheme();

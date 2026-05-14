@@ -1,9 +1,13 @@
+/*
+ * Commentaires de structure : Centralise les types TypeScript partages entre les pages, composants et acces Supabase.
+ */
 // ── Supabase DB types ──────────────────────────────────────────────────────────
 
 export type Gender = "homme" | "femme" | "non-binaire" | "non-precise";
 
 export type SafetyLevel = "optimal" | "medium" | "alert" | "danger" | "offline";
 
+// Contrat de donnees partage : decrit la forme attendue par TypeScript.
 export interface Profile {
   id: string;
   email: string;
@@ -53,6 +57,7 @@ export interface FabLab {
   created_at: string;
 }
 
+// Contrat de donnees partage : decrit la forme attendue par TypeScript.
 export interface Favorite {
   id: string;
   user_id: string;
@@ -61,6 +66,7 @@ export interface Favorite {
   fablab?: FabLab;
 }
 
+// Contrat de donnees partage : decrit la forme attendue par TypeScript.
 export interface Plan {
   id: string;
   name: string;
@@ -74,11 +80,13 @@ export interface Plan {
 
 // ── Component props ─────────────────────────────────────────────────────────────
 
+// Contrat de donnees partage : decrit la forme attendue par TypeScript.
 export interface SafetyBadgeProps {
   level: SafetyLevel;
   size?: "sm" | "md" | "lg";
 }
 
+// Contrat de donnees partage : decrit la forme attendue par TypeScript.
 export interface FabLabCardProps {
   fablab: FabLab;
   isFavorite: boolean;

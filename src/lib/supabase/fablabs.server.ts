@@ -1,3 +1,6 @@
+/*
+ * Commentaires de structure : Contient les fonctions serveur pour recuperer les FabLabs depuis les composants RSC.
+ */
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { dbToFabLab, fetchAirQualityAverages } from "@/lib/supabase/fablabs";
 import type { SupabaseClient } from "@supabase/supabase-js";
