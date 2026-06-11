@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 import { useTheme } from "@/lib/context/ThemeContext";
 import { createClient } from "@/lib/supabase/client";
 import { fetchFabLabs } from "@/lib/supabase/fablabs";
@@ -27,6 +28,39 @@ function OxalysLogo({ size = 40, className = "" }: { size?: number; className?: 
 
 // Type local : limite les valeurs possibles et securise les branches de logique.
 type Mode = "login" | "register";
+
+interface PasswordInputProps {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+}
+
+function PasswordInput({ value, onChange, placeholder }: PasswordInputProps) {
+  const [showPassword, setShowPassword] = useState(false);
+  const Icon = showPassword ? EyeOff : Eye;
+
+  return (
+    <div className="relative">
+      <input
+        type={showPassword ? "text" : "password"}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="input-brand"
+        style={{ paddingRight: "3rem" }}
+      />
+      <button
+        type="button"
+        onClick={() => setShowPassword((visible) => !visible)}
+        className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1.5 text-[var(--text-muted)] transition-colors hover:text-sky-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60"
+        aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+        title={showPassword ? "Masquer" : "Afficher"}
+      >
+        <Icon size={18} aria-hidden="true" />
+      </button>
+    </div>
+  );
+}
 
 // Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function AuthPage() {
@@ -167,12 +201,10 @@ function LoginForm() {
         <label className="block text-xs font-semibold text-[var(--text-muted)] mb-1.5">
           Mot de passe
         </label>
-        <input
-          type="password"
+        <PasswordInput
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={setPassword}
           placeholder="••••••••"
-          className="input-brand"
         />
       </div>
 
@@ -419,13 +451,19 @@ function RegisterForm() {
         <div className="flex flex-col gap-4">
           <div>
             <label className="block text-xs font-semibold text-[var(--text-muted)] mb-1.5">Mot de passe *</label>
-            <input type="password" value={form.password} onChange={(e) => set("password", e.target.value)}
-              placeholder="Minimum 8 caractères" className="input-brand" />
+            <PasswordInput
+              value={form.password}
+              onChange={(value) => set("password", value)}
+              placeholder="Minimum 8 caractères"
+            />
           </div>
           <div>
             <label className="block text-xs font-semibold text-[var(--text-muted)] mb-1.5">Confirmer *</label>
-            <input type="password" value={form.confirmPassword} onChange={(e) => set("confirmPassword", e.target.value)}
-              placeholder="••••••••" className="input-brand" />
+            <PasswordInput
+              value={form.confirmPassword}
+              onChange={(value) => set("confirmPassword", value)}
+              placeholder="••••••••"
+            />
           </div>
           <div className="bg-green-400/8 border border-green-400/20 rounded-xl p-4 text-xs text-green-400">
             ✓ En créant votre compte, vous acceptez nos CGU et notre politique de confidentialité.
