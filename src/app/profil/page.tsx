@@ -10,7 +10,7 @@ import Image from "next/image";
 import {
   LogOut, MapPin, Mail, Phone, Heart, Star,
   Plus, Cpu, AlertCircle, CheckCircle2, AlertTriangle, Ban, User, WifiOff,
-  Bell, MessageSquare,
+  Bell, MessageSquare, Wrench,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchFabLabById } from "@/lib/supabase/fablabs";
@@ -24,6 +24,7 @@ const SAFETY = {
   medium:  { color: "#facc15", Icon: AlertCircle,   label: "Moyen" },
   alert:   { color: "#f97316", Icon: AlertTriangle, label: "Alerte" },
   danger:  { color: "#ef4444", Icon: Ban,           label: "Danger" },
+  maintenance: { color: "#8b5cf6", Icon: Wrench,    label: "Maintenance" },
   offline: { color: "#94a3b8", Icon: WifiOff,       label: "Hors service" },
 };
 

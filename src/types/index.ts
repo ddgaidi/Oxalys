@@ -5,7 +5,7 @@
 
 export type Gender = "homme" | "femme" | "non-binaire" | "non-precise";
 
-export type SafetyLevel = "optimal" | "medium" | "alert" | "danger" | "offline";
+export type SafetyLevel = "optimal" | "medium" | "alert" | "danger" | "maintenance" | "offline";
 
 // Contrat de donnees partage : decrit la forme attendue par TypeScript.
 export interface Profile {
@@ -34,6 +34,7 @@ export interface FabLabDB {
 export interface StationDB {
   fablab_id: string | null;
   air_qualite: number | string | null;
+  maintenance_active: boolean | null;
   last_seen_at: string | null;
 }
 
@@ -50,6 +51,7 @@ export interface FabLab {
   cover_url?: string;
   safety: SafetyLevel;
   air_quality_average?: number;
+  maintenance_active?: boolean;
   equipment?: string[];
   website?: string;
   email?: string;

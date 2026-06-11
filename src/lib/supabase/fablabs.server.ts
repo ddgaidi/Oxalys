@@ -2,7 +2,7 @@
  * Commentaires de structure : Contient les fonctions serveur pour recuperer les FabLabs depuis les composants RSC.
  */
 import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { dbToFabLab, fetchAirQualityAverages } from "@/lib/supabase/fablabs";
+import { dbToFabLab, fetchStationSummaries } from "@/lib/supabase/fablabs";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { FabLab, FabLabDB } from "@/types";
 
@@ -20,12 +20,12 @@ export async function fetchFabLabsServer(): Promise<FabLab[]> {
   }
 
   const fablabs = (data ?? []) as FabLabDB[];
-  const airQualityAverages = await fetchAirQualityAverages(
+  const stationSummaries = await fetchStationSummaries(
     supabase as SupabaseClient,
     fablabs.map((fablab) => fablab.id)
   );
 
-  return fablabs.map((fablab) => dbToFabLab(fablab, airQualityAverages.get(fablab.id)));
+  return fablabs.map((fablab) => dbToFabLab(fablab, stationSummaries.get(fablab.id)));
 }
 
 /** Fetch 6 random fablabs - server-side (RSC only) */
@@ -49,12 +49,12 @@ export async function fetchRandomFabLabsServer(limit: number = 6): Promise<FabLa
 
   const shuffled = [...(data as FabLabDB[])].sort(() => 0.5 - Math.random());
   const selected = shuffled.slice(0, limit);
-  const airQualityAverages = await fetchAirQualityAverages(
+  const stationSummaries = await fetchStationSummaries(
     supabase as SupabaseClient,
     selected.map((fablab) => fablab.id)
   );
 
-  return selected.map((fablab) => dbToFabLab(fablab, airQualityAverages.get(fablab.id)));
+  return selected.map((fablab) => dbToFabLab(fablab, stationSummaries.get(fablab.id)));
 }
 
 /** Fetch a single fablab by UUID — server-side (RSC only) */
@@ -69,6 +69,6 @@ export async function fetchFabLabByIdServer(id: string): Promise<FabLab | null> 
   if (error || !data) return null;
 
   const fablab = data as FabLabDB;
-  const airQualityAverages = await fetchAirQualityAverages(supabase as SupabaseClient, [fablab.id]);
-  return dbToFabLab(fablab, airQualityAverages.get(fablab.id));
+  const stationSummaries = await fetchStationSummaries(supabase as SupabaseClient, [fablab.id]);
+  return dbToFabLab(fablab, stationSummaries.get(fablab.id));
 }

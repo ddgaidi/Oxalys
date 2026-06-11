@@ -532,7 +532,7 @@ const TECHNOLOGY_TABS = [
   {
     id: "oxalys",
     label: "Oxalys",
-    color: "#10b981",
+    color: "#3b82f6",
     items: ["Next.js", "React", "TypeScript", "TailwindCSS", "Supabase Auth", "Stripe Checkout"],
   },
   {
@@ -544,7 +544,7 @@ const TECHNOLOGY_TABS = [
   {
     id: "monitor",
     label: "OxalysMonitor",
-    color: "#3b82f6",
+    color: "#8b5cf6",
     items: ["Next.js", "React", "Three.js", "@react-three/fiber", "@react-three/drei", "Supabase Realtime"],
   },
 ] as const;

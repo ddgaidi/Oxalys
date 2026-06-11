@@ -167,6 +167,14 @@ const SAFETY: Record<SafetyLevel, { color: string; bg: string; border: string; l
     icon: Ban,
     description: "Danger : l'air est trop pollué. L'accès est interdit.",
   },
+  maintenance: {
+    color: "#8b5cf6",
+    bg: "rgba(139,92,246,0.15)",
+    border: "rgba(139,92,246,0.35)",
+    label: "Maintenance",
+    icon: Wrench,
+    description: "Maintenance en cours. L'accès depend des consignes du FabLab.",
+  },
   offline: {
     color: "#94a3b8",
     bg: "rgba(148,163,184,0.15)",
