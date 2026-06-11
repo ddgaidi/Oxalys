@@ -9,41 +9,29 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accueil/AboutSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accueil/AboutSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accueil/HeroSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accueil/HeroSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accueil/PartnersSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accueil/PartnersSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accueil/StationSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accueil/StationSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accueil/StatsSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accueil/StatsSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/LoginForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/RegisterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/RegisterForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accueil/AboutSection.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accueil/HeroSection.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accueil/PartnersSection.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accueil/StationSection.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accueil/StatsSection.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/LoginForm.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/RegisterForm.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/auth/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/profil/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profil/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/tarifs/TarifsClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tarifs/TarifsClient.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/tarifs/TarifsClient.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/tarifs/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tarifs/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/FabLabGridCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/FabLabGridCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabDetailContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabDetailContent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabFavoriteButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabFavoriteButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/FabLabGridCard.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabDetailContent.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/FabLabFavoriteButton.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/[slug]/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/ton-fablab/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ton-fablab/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Footer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/layout/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Navbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/FabLabCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/FabLabCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/OxalysLogo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/OxalysLogo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/PlanCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/PlanCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/SafetyBadge.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/SafetyBadge.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/TrustedSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/TrustedSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/air-quality.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/air-quality.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/context/ThemeContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/context/ThemeContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/data.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/hooks/useCountUp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/hooks/useCountUp.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/FabLabCard.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/PlanCard.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/SafetyBadge.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/TrustedSection.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lib/hooks/useFavorites.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/hooks/useFavorites.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/supabase/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/supabase/client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/supabase/fablabs.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/supabase/fablabs.server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/supabase/fablabs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/supabase/fablabs.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/supabase/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/supabase/server.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +40,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="57" />
+    <option name="cachedIndexableFilesCount" value="48" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -70,6 +58,65 @@
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0080462532263077" />
+      <entry key="MS500" value="1.9497622025030097" />
+      <entry key="S2" value="4.102496563370144" />
+      <entry key="S5" value="5.104116912943667" />
+      <entry key="S10" value="5.5247648983337045" />
+      <entry key="S30" value="5.835028572183517" />
+      <entry key="S60" value="5.9166611316791835" />
+      <entry key="M2" value="5.958114696942353" />
+      <entry key="M5" value="5.983193736021338" />
+      <entry key="M10" value="5.991588149533695" />
+      <entry key="M15" value="5.994390160168466" />
+      <entry key="M30" value="5.997194109802993" />
+      <entry key="H1" value="5.998596812233462" />
+      <entry key="H2" value="5.999298345437502" />
+      <entry key="H4" value="5.999649157547416" />
+      <entry key="D1" value="5.999941524150642" />
+      <entry key="W1" value="5.999991646255626" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="0.0" />
+      <entry key="M15" value="0.0" />
+      <entry key="M30" value="0.0" />
+      <entry key="H1" value="0.0" />
+      <entry key="H2" value="0.0" />
+      <entry key="H4" value="0.0" />
+      <entry key="D1" value="0.0" />
+      <entry key="W1" value="0.0" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.08980377924279292" />
+      <entry key="MS500" value="1.5399725335989871" />
+      <entry key="S2" value="3.9714666772621214" />
+      <entry key="S5" value="5.048162339201084" />
+      <entry key="S10" value="5.496108886566937" />
+      <entry key="S30" value="5.825315765959982" />
+      <entry key="S60" value="5.9117839516847" />
+      <entry key="M2" value="5.955670859828233" />
+      <entry key="M5" value="5.982214935003248" />
+      <entry key="M10" value="5.991098537419925" />
+      <entry key="M15" value="5.994063705026539" />
+      <entry key="M30" value="5.997030858688273" />
+      <entry key="H1" value="5.998515180788153" />
+      <entry key="H2" value="5.999257528242609" />
+      <entry key="H4" value="5.999628748581879" />
+      <entry key="D1" value="5.999938122605259" />
+      <entry key="W1" value="5.999991160319319" />
+    </decayedShown>
   </component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
@@ -138,7 +185,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.23567.141" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.24374.125" />
       </set>
     </attachedChunks>
   </component>
@@ -178,7 +225,9 @@
       <workItem from="1778534112463" duration="1493000" />
       <workItem from="1778599216912" duration="156000" />
       <workItem from="1778759714272" duration="5000" />
-      <workItem from="1778764102575" duration="69000" />
+      <workItem from="1778764102575" duration="3803000" />
+      <workItem from="1778781499719" duration="9000" />
+      <workItem from="1781163978810" duration="889000" />
     </task>
     <servers />
   </component>

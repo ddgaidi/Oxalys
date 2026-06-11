@@ -1,12 +1,8 @@
 "use client";
 
-/*
- * Commentaires de structure : Construit la page tarifs avec les offres et explications commerciales.
- */
 import { useState } from "react";
-import { Building2, Cpu, LayoutDashboard, Mail, Check, Minus } from "lucide-react";
+import { Building2, Check, Cpu, GraduationCap, LayoutDashboard, Mail, Minus } from "lucide-react";
 import { useTheme } from "@/lib/context/ThemeContext";
-import TrustedSection from "@/components/ui/TrustedSection";
 import { PLANS_DATA } from "@/lib/data";
 
 // Configuration locale qui pilote le rendu ou le comportement de ce module.
@@ -37,8 +33,28 @@ const HOW_IT_WORKS = [
 // Composant principal : orchestre les donnees, le theme et le rendu de cette vue.
 export default function TarifsPage() {
   const [annual, setAnnual] = useState(false);
+  const [checkoutPlan, setCheckoutPlan] = useState<string | null>(null);
   const { theme } = useTheme();
   const isDark = theme === "dark";
+
+  async function startCheckout(planId: string) {
+    setCheckoutPlan(planId);
+    try {
+      const response = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId, billing: annual ? "annual" : "monthly" }),
+      });
+      const payload = await response.json();
+      if (!response.ok || !payload.url) {
+        if (response.status === 401) window.location.href = "/auth";
+        return;
+      }
+      window.location.href = payload.url;
+    } finally {
+      setCheckoutPlan(null);
+    }
+  }
 
   /* ── Design tokens ── */
   const pageBg      = isDark ? "linear-gradient(160deg, #080c18 0%, #0a0f1e 40%, #06111a 100%)" : "linear-gradient(160deg, #f0f4ff 0%, #f8faff 40%, #eef6f2 100%)";
@@ -244,6 +260,8 @@ export default function TarifsPage() {
 
                   {/* CTA */}
                   <button
+                    onClick={() => startCheckout(plan.id)}
+                    disabled={checkoutPlan === plan.id}
                     className="w-full py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:opacity-90 hover:scale-[1.02]"
                     style={
                       plan.featured
@@ -251,7 +269,7 @@ export default function TarifsPage() {
                         : { background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)", border: `1px solid ${plan.color}55`, color: plan.color }
                     }
                   >
-                    Choisir {plan.name}
+                    {checkoutPlan === plan.id ? "Redirection..." : `Choisir ${plan.name}`}
                   </button>
                 </div>
               );
@@ -327,5 +345,54 @@ export default function TarifsPage() {
         <TrustedSection title="Ils nous font confiance" />
       </div>
     </div>
+  );
+}
+
+function TrustedSection({ title = "Ils nous font confiance" }: { title?: string }) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  const sectionLabel = isDark ? "rgba(255,255,255,0.22)" : "#94a3b8";
+  const cardBg       = isDark ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.82)";
+  const cardBorder   = isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.07)";
+  const cardShadow   = isDark ? "none"                   : "0 1px 8px rgba(0,0,0,0.04)";
+  const nameColor    = isDark ? "rgba(255,255,255,0.5)"  : "#64748b";
+
+  const items = [
+    { id: "1", name: "École Polytechnique" },
+    { id: "2", name: "INSA Lyon" },
+    { id: "3", name: "Centrale Nantes" },
+    { id: "4", name: "Université Paris-Saclay" },
+    { id: "5", name: "IUT Douai" },
+    { id: "6", name: "Mines ParisTech" },
+  ];
+
+  return (
+    <section className="py-20 px-5">
+      <div className="max-w-5xl mx-auto">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-center mb-10" style={{ color: sectionLabel }}>
+          {title}
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {items.map((item) => (
+            <div
+              key={item.id}
+              className="p-4 flex items-center gap-3 rounded-2xl transition-all duration-200 hover:scale-[1.02]"
+              style={{ background: cardBg, border: `1px solid ${cardBorder}`, boxShadow: cardShadow }}
+            >
+              <div
+                className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.2)" }}
+              >
+                <GraduationCap size={15} className="text-blue-500" />
+              </div>
+              <span className="font-medium text-sm truncate" style={{ color: nameColor }}>
+                {item.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

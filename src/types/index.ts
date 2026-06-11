@@ -60,7 +60,7 @@ export interface FabLab {
 // Contrat de donnees partage : decrit la forme attendue par TypeScript.
 export interface Favorite {
   id: string;
-  user_id: string;
+  membre_id: string;
   fablab_id: string;
   created_at: string;
   fablab?: FabLab;
@@ -76,20 +76,4 @@ export interface Plan {
   featured?: boolean;
   features: string[];
   missing: string[];
-}
-
-// ── Component props ─────────────────────────────────────────────────────────────
-
-// Contrat de donnees partage : decrit la forme attendue par TypeScript.
-export interface SafetyBadgeProps {
-  level: SafetyLevel;
-  size?: "sm" | "md" | "lg";
-}
-
-// Contrat de donnees partage : decrit la forme attendue par TypeScript.
-export interface FabLabCardProps {
-  fablab: FabLab;
-  isFavorite: boolean;
-  onToggleFavorite: (id: string) => void;
-  onClick: () => void;
 }

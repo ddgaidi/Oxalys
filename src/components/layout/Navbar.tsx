@@ -46,7 +46,7 @@ export default function Navbar() {
   }, []);
 
   async function loadInitials(sb: ReturnType<typeof createClient>, uid: string) {
-    const { data } = await sb.from("etudiant").select("prenom,nom").eq("id", uid).single();
+    const { data } = await sb.from("membre").select("prenom,nom").eq("auth_id", uid).maybeSingle();
     if (data) {
       setInitials(`${data.prenom?.[0] ?? ""}${data.nom?.[0] ?? ""}`.toUpperCase() || "?");
     }

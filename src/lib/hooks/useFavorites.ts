@@ -17,17 +17,19 @@ const hasSupabase =
   !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 /**
- * useFavorites — gère les favoris pour les utilisateurs connectés (etudiant.favoris)
+ * useFavorites — gère les favoris pour les utilisateurs connectés (table favori)
  * et les invités (localStorage).
  *
- * userId peut être passé explicitement OU le hook auto-détecte l'utilisateur
+ * memberId peut être passé explicitement OU le hook auto-détecte l'utilisateur
  * connecté via supabase.auth. Ainsi tous les composants qui appelaient
  * useFavorites(undefined) fonctionnent correctement.
  */
-export function useFavorites(explicitUserId?: string) {
+export function useFavorites(explicitMemberId?: string | null) {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [loading,   setLoading]   = useState(true);
-  const [userId,    setUserId]    = useState<string | undefined>(explicitUserId);
+  const [memberId,  setMemberId]  = useState<string | null | undefined>(
+    explicitMemberId === undefined ? undefined : explicitMemberId
+  );
 
   // Garde une référence stable vers les favorites pour toggleFavorite
   const favRef = useRef<string[]>([]);
@@ -38,46 +40,74 @@ export function useFavorites(explicitUserId?: string) {
     try { return createClient(); } catch { return null; }
   }, []);
 
-  /* ── 1. Résolution du userId (explicite OU auth Supabase) ── */
+  /* ── 1. Résolution du memberId (explicite OU auth Supabase) ── */
   useEffect(() => {
-    if (explicitUserId !== undefined) {
-      setUserId(explicitUserId);
+    let cancelled = false;
+
+    if (explicitMemberId !== undefined) {
+      setMemberId(explicitMemberId);
       return;
     }
-    if (!supabase) return;
+
+    if (!supabase) {
+      setMemberId(null);
+      return;
+    }
+
+    const client = supabase;
+
+    async function resolveMemberId(authUserId?: string) {
+      if (!authUserId) {
+        if (!cancelled) setMemberId(null);
+        return;
+      }
+
+      const { data } = await client
+        .from("membre")
+        .select("id")
+        .eq("auth_id", authUserId)
+        .maybeSingle();
+
+      if (!cancelled) setMemberId((data?.id as string | undefined) ?? null);
+    }
 
     // Lecture initiale
     supabase.auth.getUser().then(({ data }) => {
-      setUserId(data.user?.id ?? undefined);
+      void resolveMemberId(data.user?.id);
     });
 
     // Écoute les changements (login / logout)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
-      setUserId(session?.user?.id ?? undefined);
+      void resolveMemberId(session?.user?.id);
     });
 
-    return () => subscription.unsubscribe();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [explicitUserId]);
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
+  }, [explicitMemberId, supabase]);
 
-  /* ── 2. Chargement des favoris quand userId est résolu ── */
+  /* ── 2. Chargement des favoris quand memberId est résolu ── */
   useEffect(() => {
     let cancelled = false;
 
     async function load() {
       setLoading(true);
 
-      if (userId && supabase) {
-        // Utilisateur connecté → lit etudiant.favoris
+      if (memberId && supabase) {
+        // Utilisateur connecté → lit la table favori
         const { data } = await supabase
-          .from("etudiant")
-          .select("favoris")
-          .eq("id", userId)
-          .single();
+          .from("favori")
+          .select("fablab_id")
+          .eq("membre_id", memberId)
+          .order("position", { ascending: true })
+          .order("created_at", { ascending: true });
 
-        if (!cancelled) setFavorites((data?.favoris as string[]) ?? []);
-      } else if (userId === undefined && explicitUserId === undefined) {
-        // userId pas encore résolu (auth en cours) → on attend
+        if (!cancelled) {
+          setFavorites(((data ?? []) as { fablab_id: string }[]).map((row) => row.fablab_id));
+        }
+      } else if (memberId === undefined && explicitMemberId === undefined) {
+        // memberId pas encore résolu (auth en cours) → on attend
         return;
       } else {
         // Invité → localStorage
@@ -94,8 +124,7 @@ export function useFavorites(explicitUserId?: string) {
 
     load();
     return () => { cancelled = true; };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
+  }, [memberId, explicitMemberId, supabase]);
 
   /* ── 3. Toggle ── */
   async function toggleFavorite(fablabId: string) {
@@ -113,11 +142,22 @@ export function useFavorites(explicitUserId?: string) {
 
     setFavorites(next); // mise à jour optimiste
 
-    if (userId && supabase) {
-      const { error } = await supabase
-        .from("etudiant")
-        .update({ favoris: next })
-        .eq("id", userId);
+    if (memberId && supabase) {
+      const request = isFav
+        ? supabase
+            .from("favori")
+            .delete()
+            .eq("membre_id", memberId)
+            .eq("fablab_id", fablabId)
+        : supabase
+            .from("favori")
+            .insert({
+              membre_id: memberId,
+              fablab_id: fablabId,
+              position: next.length,
+            });
+
+      const { error } = await request;
 
       if (error) {
         console.error("[useFavorites] update error:", error.message);

@@ -10,6 +10,7 @@ import Image from "next/image";
 import {
   LogOut, MapPin, Mail, Phone, Heart, Star,
   Plus, Cpu, AlertCircle, CheckCircle2, AlertTriangle, Ban, User, WifiOff,
+  Bell, MessageSquare,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchFabLabById } from "@/lib/supabase/fablabs";
@@ -24,14 +25,6 @@ const SAFETY = {
   alert:   { color: "#f97316", Icon: AlertTriangle, label: "Alerte" },
   danger:  { color: "#ef4444", Icon: Ban,           label: "Danger" },
   offline: { color: "#94a3b8", Icon: WifiOff,       label: "Hors service" },
-};
-
-// Configuration locale qui pilote le rendu ou le comportement de ce module.
-const GENRE_LABEL: Record<string, string> = {
-  homme:        "Homme",
-  femme:        "Femme",
-  "non-binaire":"Non-binaire",
-  "non-precise":"Non précisé",
 };
 
 // Configuration locale qui pilote le rendu ou le comportement de ce module.
@@ -51,17 +44,50 @@ function cardGradient(name: string, isDark: boolean) {
 }
 
 // Contrat local : precise les valeurs manipulees uniquement dans ce fichier.
-interface EtudiantRow {
+type MembreRole = "etudiant" | "professeur" | "technicien" | "administrateur";
+
+interface MembreRow {
   id: string;
+  auth_id: string | null;
   prenom: string;
   nom: string;
-  genre: string;
   email: string;
   telephone: string | null;
-  fablab_id: string | null;
-  favoris: string[];
+  image: string | null;
+  role: MembreRole;
+  fablab_ref: string | null;
+  notification_title: string | null;
+  notification_message: string | null;
+  notification_type: string | null;
+  notification_read: boolean;
   created_at: string;
+  updated_at: string;
 }
+
+type NotificationPreferences = {
+  app: boolean;
+  email: boolean;
+  sms: boolean;
+  professorOrange: boolean;
+  technicianAllThresholds: boolean;
+};
+
+const DEFAULT_NOTIFICATION_PREFERENCES: NotificationPreferences = {
+  app: true,
+  email: true,
+  sms: false,
+  professorOrange: false,
+  technicianAllThresholds: true,
+};
+
+const NOTIFICATION_CHANNELS_KEY = "oxalys_notification_channels";
+
+const ROLE_LABEL: Record<MembreRole, string> = {
+  etudiant: "Etudiant",
+  professeur: "Professeur",
+  technicien: "Technicien",
+  administrateur: "Admin",
+};
 
 /* ── Avatar initials ── */
 function initials(prenom: string, nom: string) {
@@ -157,13 +183,14 @@ export default function ProfilePage() {
   const router     = useRouter();
   const supabase   = createClient();
 
-  const [profile,   setProfile]   = useState<EtudiantRow | null>(null);
+  const [profile,   setProfile]   = useState<MembreRow | null>(null);
   const [fablabRef, setFablabRef] = useState<FabLab | null>(null);
   const [favFablabs, setFavFablabs] = useState<(FabLab | null)[]>([]);
+  const [certificationPending, setCertificationPending] = useState(false);
+  const [notificationPreferences, setNotificationPreferences] = useState<NotificationPreferences>(DEFAULT_NOTIFICATION_PREFERENCES);
   const [loading,   setLoading]   = useState(true);
-  const [userId,    setUserId]    = useState<string | undefined>(undefined);
 
-  const { favorites, toggleFavorite } = useFavorites(userId);
+  const { favorites, toggleFavorite } = useFavorites();
 
   /* ── Fetch data ── */
   useEffect(() => {
@@ -171,24 +198,38 @@ export default function ProfilePage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push("/auth"); return; }
 
-      setUserId(user.id);
-
       const { data: row } = await supabase
-        .from("etudiant")
-        .select("*")
-        .eq("id", user.id)
-        .single();
+        .from("membre")
+        .select("id,auth_id,prenom,nom,email,telephone,image,role,fablab_ref,notification_title,notification_message,notification_type,notification_read,created_at,updated_at")
+        .eq("auth_id", user.id)
+        .maybeSingle();
 
       if (!row) { setLoading(false); return; }
-      setProfile(row as EtudiantRow);
+      const member = row as MembreRow;
+      setProfile(member);
 
-      if (row.fablab_id) {
-        setFablabRef(await fetchFabLabById(row.fablab_id));
+      try {
+        const stored = localStorage.getItem(`${NOTIFICATION_CHANNELS_KEY}_${member.id}`);
+        setNotificationPreferences(stored
+          ? { ...DEFAULT_NOTIFICATION_PREFERENCES, ...(JSON.parse(stored) as Partial<NotificationPreferences>) }
+          : DEFAULT_NOTIFICATION_PREFERENCES
+        );
+      } catch {
+        setNotificationPreferences(DEFAULT_NOTIFICATION_PREFERENCES);
       }
 
-      if (row.favoris?.length) {
-        const results = await Promise.all(row.favoris.map((id: string) => fetchFabLabById(id)));
-        setFavFablabs(results);
+      if (member.fablab_ref) {
+        setFablabRef(await fetchFabLabById(member.fablab_ref));
+
+        const { data: certificationRequest } = await supabase
+          .from("membre_certification_requete")
+          .select("id")
+          .eq("membre_id", member.id)
+          .eq("fablab_id", member.fablab_ref)
+          .eq("status", "en_attente")
+          .maybeSingle();
+
+        setCertificationPending(Boolean(certificationRequest));
       }
 
       setLoading(false);
@@ -199,13 +240,27 @@ export default function ProfilePage() {
 
   /* ── Re-sync favoris quand useFavorites change ── */
   useEffect(() => {
-    if (!userId || !favorites.length) return;
+    if (!favorites.length) {
+      setFavFablabs([]);
+      return;
+    }
     Promise.all(favorites.map((id) => fetchFabLabById(id))).then(setFavFablabs);
-  }, [favorites, userId]);
+  }, [favorites]);
 
   async function handleLogout() {
     await supabase.auth.signOut();
     router.push("/");
+  }
+
+  async function updateNotificationPreference(key: keyof NotificationPreferences, value: boolean) {
+    const next = { ...notificationPreferences, [key]: value };
+    setNotificationPreferences(next);
+
+    if (profile?.id) {
+      try {
+        localStorage.setItem(`${NOTIFICATION_CHANNELS_KEY}_${profile.id}`, JSON.stringify(next));
+      } catch {}
+    }
   }
 
   /* ── Design tokens ── */
@@ -235,6 +290,7 @@ export default function ProfilePage() {
   const memberSince  = profile ? new Date(profile.created_at).toLocaleDateString("fr-FR", { month: "long", year: "numeric" }) : "";
   const favCount     = favorites.length;
   const fillPct      = (favCount / 5) * 100;
+  const displayedRoles = profile ? [ROLE_LABEL[profile.role] ?? "Etudiant"] : ["Etudiant"];
 
   return (
     <div className="min-h-screen relative" style={{ background: pageBg }}>
@@ -290,14 +346,19 @@ export default function ProfilePage() {
               <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-dot-pulse" />
               Connecté
             </span>
-            {profile?.genre && profile.genre !== "non-precise" && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: cardBg, border: `1px solid ${cardBorder}`, color: bodyColor }}>
-                {GENRE_LABEL[profile.genre] ?? profile.genre}
-              </span>
-            )}
             <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: cardBg, border: `1px solid ${cardBorder}`, color: bodyColor }}>
               Membre depuis {memberSince}
             </span>
+            {displayedRoles.map((role) => (
+              <span key={role} className="text-xs px-3 py-1.5 rounded-full" style={{ background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.25)", color: "#10b981" }}>
+                {role}
+              </span>
+            ))}
+            {certificationPending && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: "rgba(250,204,21,0.12)", border: "1px solid rgba(250,204,21,0.28)", color: "#eab308" }}>
+                Certification en attente
+              </span>
+            )}
           </div>
         </div>
 
@@ -420,6 +481,63 @@ export default function ProfilePage() {
               </div>
             )}
           </div>
+        </div>
+
+        <div
+          className="rounded-2xl p-6 mb-8 animate-profile-slide"
+          style={{ background: cardBg, border: `1px solid ${cardBorder}`, boxShadow: cardShadow, animationDelay: "0.22s", opacity: 0 }}
+        >
+          <div className="flex items-center gap-2 mb-5">
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(16,185,129,0.12)", border: "1px solid rgba(16,185,129,0.25)" }}>
+              <Bell size={13} style={{ color: "#10b981" }} />
+            </div>
+            <h2 className="font-display font-semibold text-sm" style={{ color: titleColor }}>
+              Notifications seuils FabLab
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {[
+              { key: "app" as const, label: "Notification", icon: Bell },
+              { key: "email" as const, label: "Email", icon: Mail },
+              { key: "sms" as const, label: "SMS", icon: MessageSquare },
+            ].map(({ key, label, icon: Icon }) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => updateNotificationPreference(key, !notificationPreferences[key])}
+                className="flex items-center justify-between gap-3 rounded-xl px-4 py-3 text-left transition-all hover:scale-[1.01]"
+                style={{
+                  background: notificationPreferences[key] ? "rgba(16,185,129,0.1)" : isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)",
+                  border: `1px solid ${notificationPreferences[key] ? "rgba(16,185,129,0.3)" : cardBorder}`,
+                  color: notificationPreferences[key] ? "#10b981" : bodyColor,
+                }}
+              >
+                <span className="flex items-center gap-2 text-sm font-semibold">
+                  <Icon size={14} />
+                  {label}
+                </span>
+                <span className="text-[10px] font-bold uppercase">
+                  {notificationPreferences[key] ? "Actif" : "Off"}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {(profile?.role === "professeur" || profile?.role === "administrateur") && (
+            <button
+              type="button"
+              onClick={() => updateNotificationPreference("professorOrange", !notificationPreferences.professorOrange)}
+              className="mt-3 w-full rounded-xl px-4 py-3 text-left text-sm font-semibold transition-all"
+              style={{
+                background: notificationPreferences.professorOrange ? "rgba(249,115,22,0.1)" : isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)",
+                border: `1px solid ${notificationPreferences.professorOrange ? "rgba(249,115,22,0.3)" : cardBorder}`,
+                color: notificationPreferences.professorOrange ? "#f97316" : bodyColor,
+              }}
+            >
+              Alertes orange professeur : {notificationPreferences.professorOrange ? "activées" : "désactivées"}
+            </button>
+          )}
         </div>
 
         {/* ══ FAVORIS GRID ═════════════════════════════════════ */}
