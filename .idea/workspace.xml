@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b175b340-5ccc-4dc9-9c84-a3cfbed42c66" name="Changes" comment="" />
+    <list default="true" id="b175b340-5ccc-4dc9-9c84-a3cfbed42c66" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/ShadcnHelperSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ShadcnHelperSettings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/auth/register/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/register/route.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -199,6 +203,9 @@
       <workItem from="1778764102575" duration="3803000" />
       <workItem from="1778781499719" duration="9000" />
       <workItem from="1781163978810" duration="1538000" />
+      <workItem from="1781223851483" duration="1393000" />
+      <workItem from="1781258527445" duration="1292000" />
+      <workItem from="1781264169369" duration="13000" />
     </task>
     <servers />
   </component>
